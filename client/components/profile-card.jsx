@@ -5,7 +5,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 export default function ProfileCard(props) {
   return (
     <div className='row justify-content-center'>
-      <div className='col-sm-8 col-md-7 col-lg-6 col-xl-5'>
+      <div className='col-sm-9 col-md-7 col-lg-6'>
         <div className='card'>
           <img src="https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/56591696/1/?bust=1659998276&width=560" className='card-img-top' alt="" />
           <div className='card-body'>
