@@ -4,7 +4,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 export default function MobileNavbar(props) {
   return (
-    <nav className='navbar fixed-bottom'>
+    <nav id='mobile-navbar' className='navbar fixed-bottom'>
       <div className='container-fluid justify-content-evenly'>
         <a><i className="fa-solid fa-paw mt-2 mb-2"></i></a>
         <a><i className="fa-solid fa-heart mt-2 mb-2"></i></a>

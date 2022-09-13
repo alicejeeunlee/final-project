@@ -1,0 +1,23 @@
+@media only screen and (min-width: 0) {
+  #desktop-nav {
+    display: none;
+  }
+
+  #card-buttons {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  #mobile-navbar {
+    display: none;
+  }
+
+  #desktop-nav {
+    display: block;
+  }
+
+  #card-buttons {
+    display: flex;
+  }
+}

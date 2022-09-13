@@ -56,3 +56,18 @@ body {
   height: 55vh;
   object-fit: cover;
 }
+
+.anchor {
+  text-decoration: none;
+  color: white;
+  font-size: 1.5rem;
+  padding-right: 1rem;
+}
+
+.btn {
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.25);
+}
+
+#card-buttons > button {
+  font-size: 2.5rem;
+}
