@@ -9,26 +9,44 @@ const app = express();
 app.use(staticMiddleware);
 
 app.get('/api/discover', (req, res) => {
-  fetch('https://api.petfinder.com/v2/oauth2/token', {
-    method: 'POST',
-    body: 'grant_type=client_credentials&client_id=' + process.env.PETFINDER_API_KEY + '&client_secret=' + process.env.PETFINDER_API_SECRET,
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    }
-  })
-    .then(res => res.json())
-    .then(data => {
-      return fetch('https://api.petfinder.com/v2/animals?type=dog&limit=1', {
-        headers: {
-          Authorization: data.token_type + ' ' + data.access_token,
-          'Content-Type': 'application/json'
-        }
-      })
-        .then(res => res.json())
-        .then(data => res.json(data))
-        .catch(err => console.error('Fetch failed at getDoggo', err));
+  let token;
+  let tokenType;
+  let expires;
+  if (!expires || expires - new Date().getTime() < 1) {
+    getOAuth()
+      .then(() => getDoggo());
+  } else {
+    getDoggo();
+  }
+
+  function getOAuth() {
+    return fetch('https://api.petfinder.com/v2/oauth2/token', {
+      method: 'POST',
+      body: 'grant_type=client_credentials&client_id=' + process.env.PETFINDER_API_KEY + '&client_secret=' + process.env.PETFINDER_API_SECRET,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
     })
-    .catch(err => console.error('Fetch failed at getOAuth', err));
+      .then(res => res.json())
+      .then(data => {
+        token = data.access_token;
+        tokenType = data.token_type;
+        expires = new Date().getTime() + (data.expires_in * 1000);
+      })
+      .catch(err => console.error('Fetch failed at getOAuth', err));
+  }
+
+  function getDoggo() {
+    return fetch('https://api.petfinder.com/v2/animals?type=dog&limit=1', {
+      headers: {
+        Authorization: tokenType + ' ' + token,
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => res.json())
+      .then(data => res.json(data))
+      .catch(err => console.error('Fetch failed at getDoggo', err));
+  }
 });
 
 app.use(errorMiddleware);
