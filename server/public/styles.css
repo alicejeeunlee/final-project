@@ -1,0 +1,83 @@
+* {
+  font-family: "Nanum Pen Script", cursive;
+}
+
+body {
+  padding-top: 6rem;
+}
+
+a,
+button {
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+.navbar {
+  background-color: #6ca4d0;
+}
+
+.navbar .navbar-brand {
+  color: white;
+  font-size: 3rem;
+}
+
+.fa-stroopwafel {
+  color: white;
+  font-size: 1.5rem;
+}
+
+.fa-paw,
+.fa-heart,
+.fa-user {
+  color: white;
+  font-size: 2.5rem;
+}
+
+.page-title {
+  font-size: 3rem;
+}
+
+.card {
+  box-shadow: 0 5px 5px rgba(48, 39, 39, 0.25);
+}
+
+.card-title {
+  color: black;
+  font-size: 3rem;
+}
+
+.fa-bone {
+  color: #6ca4d0;
+  font-size: 1rem;
+}
+
+.card-subtitle {
+  color: #68717a;
+}
+
+.card-text {
+  color: #abb5be;
+}
+
+.card-img-top {
+  height: 55vh;
+  object-fit: cover;
+}
+
+.anchor {
+  text-decoration: none;
+  color: white;
+  font-size: 2rem;
+  padding-right: 2.5rem;
+}
+
+.btn {
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.25);
+}
+
+#card-buttons > button {
+  font-size: 2.5rem;
+}
