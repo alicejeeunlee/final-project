@@ -1,6 +1,7 @@
 import React from 'react';
 import LogoNavbar from '../components/logo-navbar';
 import ProfileCard from '../components/profile-card';
+import ProfileDetail from '../components/profile-detail';
 import MobileNavbar from '../components/mobile-navbar';
 
 export default class Discover extends React.Component {
@@ -46,7 +47,8 @@ export default class Discover extends React.Component {
           <div className='row'>
             <h1 className='page-title mt-0 mb-0'>Henlo Fren</h1>
           </div>
-          <ProfileCard doggo={this.state}/>
+          <ProfileCard doggo={this.state} />
+          <ProfileDetail doggo={this.state} />
         </div>
         <MobileNavbar />
       </div>
