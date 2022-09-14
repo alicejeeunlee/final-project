@@ -8,15 +8,17 @@ const app = express();
 
 app.use(staticMiddleware);
 
-app.get('/api/discover', (req, res) => {
+app.get('/api/discover', (req, res, next) => {
   let token;
   let tokenType;
   let expires;
   if (!expires || expires - new Date().getTime() < 1) {
     getOAuth()
-      .then(() => getDoggo());
+      .then(() => getDoggo())
+      .catch(err => next(err));
   } else {
-    getDoggo();
+    getDoggo()
+      .catch(err => next(err));
   }
 
   function getOAuth() {
@@ -32,8 +34,7 @@ app.get('/api/discover', (req, res) => {
         token = data.access_token;
         tokenType = data.token_type;
         expires = new Date().getTime() + (data.expires_in * 1000);
-      })
-      .catch(err => console.error('Fetch failed at getOAuth', err));
+      });
   }
 
   function getDoggo() {
@@ -44,8 +45,7 @@ app.get('/api/discover', (req, res) => {
       }
     })
       .then(res => res.json())
-      .then(data => res.json(data))
-      .catch(err => console.error('Fetch failed at getDoggo', err));
+      .then(data => res.json(data));
   }
 });
 
