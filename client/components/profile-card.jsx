@@ -4,17 +4,17 @@ export default class ProfileCard extends React.Component {
   render() {
     return (
       <div className='row justify-content-center'>
-        <div className='col-sm-9 col-md-7 col-lg-6'>
+        <div className='col-md-9 col-lg-7 col-xl-6'>
           <a href="#details">
             <div className='card'>
-              <img src={this.props.doggo.photos[0]} className='card-img-top' alt="" />
+              <img src={this.props.data.photos[0]} className='card-img-top' alt="" />
               <div className='card-body'>
                 <div className='d-flex align-items-center'>
-                  <h2 className='card-title mt-0 mb-0'>{this.props.doggo.name}</h2>
-                  <i className="fa-solid fa-bone ms-3 me-3"></i>
-                  <h3 className='card-subtitle mt-0 mb-0'>{this.props.doggo.breed}</h3>
+                  <h2 className='card-title mt-0 mb-0'>{this.props.data.name}</h2>
+                  <i className="fa-solid fa-bone ms-2 me-2"></i>
+                  <h3 className='card-subtitle mt-0 mb-0'>{this.props.data.breed}</h3>
                 </div>
-                <h4 className='card-text'>{this.props.doggo.distance}</h4>
+                <h4 className='card-text'>{this.props.data.distance}</h4>
               </div>
             </div>
           </a>
