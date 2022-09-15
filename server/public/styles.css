@@ -3,7 +3,7 @@
 }
 
 body {
-  padding-top: 6rem;
+  padding: 6rem 0;
 }
 
 a,
@@ -80,4 +80,36 @@ a {
 
 #card-buttons > button {
   font-size: 2.5rem;
+}
+
+.detail-h1 {
+  font-size: 3rem;
+}
+
+.detail-h2 {
+  font-size: 2.2rem;
+}
+
+.detail-p {
+  font-size: 1.5rem;
+}
+
+.description-border {
+  border-top: solid 1px black;
+  border-bottom: solid 1px black;
+}
+
+.about-border {
+  border-top: solid 1px black;
+  border-bottom: solid 1px black;
+}
+
+.fa-location-dot,
+.fa-envelope,
+.fa-phone {
+  color: #6ca4d0;
+}
+
+.carousel-radius {
+  border-radius: 5px;
 }

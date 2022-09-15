@@ -14,7 +14,7 @@ export default class ProfileCard extends React.Component {
                   <i className="fa-solid fa-bone ms-3 me-3"></i>
                   <h3 className='card-subtitle mt-0 mb-0'>{this.props.doggo.breed}</h3>
                 </div>
-                <h4 className='card-text'>{this.props.doggo.location}</h4>
+                <h4 className='card-text'>{this.props.doggo.distance}</h4>
               </div>
             </div>
           </a>

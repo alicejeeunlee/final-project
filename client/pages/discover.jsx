@@ -10,8 +10,14 @@ export default class Discover extends React.Component {
     this.state = {
       photos: ['/images/woofles-placeholder.png'],
       name: null,
-      breed: null,
-      distance: null
+      breeds: null,
+      distance: null,
+      description: null,
+      contact: null,
+      age: null,
+      gender: null,
+      size: null,
+      url: null
     };
   }
 
@@ -26,14 +32,22 @@ export default class Discover extends React.Component {
       .then(result => {
         const doggo = result.animals[0];
         const photos = doggo.photos.map(x => x.full);
-        const name = doggo.name;
         const breed = doggo.breeds.primary;
-        const distance = doggo.distance;
+        const location = doggo.contact.address.city + ', ' + doggo.contact.address.state;
+        const address = doggo.contact.address.address;
+        const { name, distance, description, age, gender, size, url } = doggo;
         photos.length > 0 ? this.setState({ photos }) : this.setState({ photos: ['/images/woofles-placeholder.png'] });
         this.setState({
           name,
           breed,
-          distance
+          location,
+          distance,
+          description,
+          age,
+          gender,
+          size,
+          address,
+          url
         });
       })
       .catch(err => console.error('Fetch failed at ProfileCard componentDidMount()', err));
