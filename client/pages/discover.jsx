@@ -62,8 +62,8 @@ export default class Discover extends React.Component {
             <h1 className='page-title mt-0 mb-0'>Henlo Fren</h1>
           </div>
           <ProfileCard doggo={this.state} />
-          <ProfileDetail doggo={this.state} />
         </div>
+        <ProfileDetail doggo={this.state} />
         <MobileNavbar />
       </div>
     );
