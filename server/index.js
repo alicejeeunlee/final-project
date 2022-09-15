@@ -12,12 +12,23 @@ app.get('/api/discover', (req, res, next) => {
   let token;
   let tokenType;
   let expires;
+  let doggoHref;
+  let orgHref;
   if (!expires || expires - new Date().getTime() < 1) {
     getOAuth()
-      .then(() => getDoggo())
+      .then(() => {
+        getHref()
+          .then(() => {
+            Promise
+              .all([getDoggo(), getOrg()])
+              .then(data => res.json(data))
+              .catch(err => next(err));
+          })
+          .catch(err => next(err));
+      })
       .catch(err => next(err));
   } else {
-    getDoggo()
+    getHref()
       .catch(err => next(err));
   }
 
@@ -37,7 +48,7 @@ app.get('/api/discover', (req, res, next) => {
       });
   }
 
-  function getDoggo() {
+  function getHref() {
     return fetch('https://api.petfinder.com/v2/animals?type=dog&limit=1', {
       headers: {
         Authorization: tokenType + ' ' + token,
@@ -45,7 +56,30 @@ app.get('/api/discover', (req, res, next) => {
       }
     })
       .then(res => res.json())
-      .then(data => res.json(data));
+      .then(data => {
+        doggoHref = data.animals[0]._links.self.href;
+        orgHref = data.animals[0]._links.organization.href;
+      });
+  }
+
+  function getDoggo() {
+    return fetch('https://api.petfinder.com' + doggoHref, {
+      headers: {
+        Authorization: tokenType + ' ' + token,
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => res.json());
+  }
+
+  function getOrg() {
+    return fetch('https://api.petfinder.com' + orgHref, {
+      headers: {
+        Authorization: tokenType + ' ' + token,
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => res.json());
   }
 });
 
