@@ -1,12 +1,21 @@
 require('dotenv/config');
+const pg = require('pg');
 const express = require('express');
 const staticMiddleware = require('./static-middleware');
 const errorMiddleware = require('./error-middleware');
 const fetch = require('node-fetch');
 
+const db = new pg.Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
+
 const app = express();
 
 app.use(staticMiddleware);
+app.use(express.json());
 
 app.get('/api/discover', (req, res, next) => {
   let token;
@@ -81,6 +90,24 @@ app.get('/api/discover', (req, res, next) => {
     })
       .then(res => res.json());
   }
+});
+
+app.post('/api/like', (req, res, next) => {
+  const { address1, address2, age, breed, characteristics, description, distance, doggoId, email, gender, health, home, location, name, org, orgId, phone, photos, size, url } = req.body;
+  const sql = `
+    WITH "insertOrg" AS (
+      INSERT INTO "organizations" ("petfinderOrgId", "organization", "address1", "address2", "email", "phone")
+      VALUES ($1, $2, $3, $4, $5, $6)
+      ON CONFLICT DO NOTHING
+    )
+    INSERT INTO "dogs" ("petfinderDogId", "photoUrls", "name", "breed", "location", "age", "gender", "size", "distance", "description", "characteristics", "health", "home", "url", "petfinderOrgId")
+    VALUES ($7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $1)
+    RETURNING *
+  `;
+  const params = [orgId, org, address1, address2, email, phone, doggoId, photos, name, breed, location, age, gender, size, distance, description, characteristics, health, home, url];
+  db.query(sql, params)
+    .then(result => res.status(201).json(result.rows[0]))
+    .catch(err => next(err));
 });
 
 app.use(errorMiddleware);

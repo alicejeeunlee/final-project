@@ -27,27 +27,42 @@ export default class Discover extends React.Component {
         const primaryBreed = breeds.primary;
         breeds.mixed ? this.setState({ breed: primaryBreed + ' (mix)' }) : this.setState({ breed: primaryBreed });
         const tags = doggo.tags;
-        const characteristics = tags
-          .map(x => x[0].toUpperCase() + x.slice(1))
-          .join(', ');
+        let characteristics;
+        if (tags.length === 0) {
+          characteristics = null;
+        } else {
+          characteristics = tags
+            .map(x => x[0].toUpperCase() + x.slice(1))
+            .join(', ');
+        }
         const attributes = Object
           .keys(doggo.attributes)
           .filter(x => doggo.attributes[x] === true);
-        const health = attributes
-          .map(x => x.replace('spayed_neutered', 'Spayed/Neutered'))
-          .map(x => x.replace('shots_current', 'Vaccinated'))
-          .map(x => x.replace('house_trained', 'House Trained'))
-          .map(x => x.replace('special_needs', 'Special Needs'))
-          .map(x => x[0].toUpperCase() + x.slice(1))
-          .join(', ');
+        let health;
+        if (attributes.length === 0) {
+          health = null;
+        } else {
+          health = attributes
+            .map(x => x.replace('spayed_neutered', 'Spayed/Neutered'))
+            .map(x => x.replace('shots_current', 'Vaccinated'))
+            .map(x => x.replace('house_trained', 'House Trained'))
+            .map(x => x.replace('special_needs', 'Special Needs'))
+            .map(x => x[0].toUpperCase() + x.slice(1))
+            .join(', ');
+        }
         const environment = Object
           .keys(doggo.environment)
           .filter(x => doggo.environment[x] === true);
-        const home = environment
-          .map(x => x.replace('dogs', 'other dogs'))
-          .map(x => x.replace('cats', 'other cats'))
-          .map(x => x[0].toUpperCase() + x.slice(1))
-          .join(', ');
+        let home;
+        if (environment.length === 0) {
+          home = null;
+        } else {
+          home = environment
+            .map(x => x.replace('dogs', 'other dogs'))
+            .map(x => x.replace('cats', 'other cats'))
+            .map(x => x[0].toUpperCase() + x.slice(1))
+            .join(', ');
+        }
         const { id: doggoId, name, distance, description, age, gender, size, url } = doggo;
         const { id: orgId, name: org, email, phone } = organization;
         const contact = organization.address;
