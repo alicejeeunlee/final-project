@@ -16,7 +16,7 @@ export default class Discover extends React.Component {
 
   renderPage() {
     const { route } = this.state;
-    if (route.path === 'discover') {
+    if (route.path === 'discover' || route.path === '') {
       return (
       <div className='container'>
         <div className='row'>
