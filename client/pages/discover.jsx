@@ -1,34 +1,13 @@
 import React from 'react';
-import LogoNavbar from '../components/logo-navbar';
 import ProfileCard from '../components/profile-card';
 import ProfileDetail from '../components/profile-detail';
-import MobileNavbar from '../components/mobile-navbar';
-import parseRoute from '../lib/parse-route';
 
 export default class Discover extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      photos: ['/images/woofles-placeholder.png'],
-      route: parseRoute(window.location.hash)
+      photos: ['/images/woofles-placeholder.png']
     };
-  }
-
-  renderPage() {
-    const { route } = this.state;
-    if (route.path === 'discover' || route.path === '') {
-      return (
-      <div className='container'>
-        <div className='row'>
-          <h1 className='page-title mt-0 mb-0'>Henlo Fren</h1>
-        </div>
-        <ProfileCard data={this.state} />
-      </div>
-      );
-    }
-    if (route.path === 'details') {
-      return <ProfileDetail data={this.state} />;
-    }
   }
 
   componentDidMount() {
@@ -95,19 +74,22 @@ export default class Discover extends React.Component {
         });
       })
       .catch(err => console.error('Fetch failed at ProfileCard componentDidMount()', err));
-    addEventListener('hashchange', event => {
-      this.setState({ route: parseRoute(window.location.hash) });
-    });
   }
 
   render() {
-    return (
-      <div>
-        <LogoNavbar />
-        {this.renderPage()}
-        <MobileNavbar />
-      </div>
-    );
+    const { route } = this.props.route;
+    if (route.path === 'discover' || route.path === '') {
+      return (
+        <div className='container'>
+          <div className='row'>
+            <h1 className='page-title mt-0 mb-0'>Henlo Fren</h1>
+          </div>
+          <ProfileCard data={this.state} />
+        </div>
+      );
+    }
+    if (route.path === 'details') {
+      return <ProfileDetail data={this.state} />;
+    }
   }
-
 }
