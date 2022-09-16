@@ -30,7 +30,7 @@ export default class ProfileDetail extends React.Component {
           <div className='col-md-5'>
             <div className='row mt-3'>
               <div className='col'>
-                <div id="carousel" className="carousel slide" data-bs-ride="true">
+                <div id="carousel" className="carousel slide">
                   <div className={this.props.data.photos.length === 1 ? 'd-none' : 'carousel-indicators'}>
                     {this.makeIndicators(this.props)}
                   </div>

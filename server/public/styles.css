@@ -21,12 +21,20 @@ a {
 
 .navbar .navbar-brand {
   color: white;
-  font-size: 3rem;
+  font-size: 3.5rem;
+  pointer-events: none;
 }
 
 .fa-stroopwafel {
   color: white;
   font-size: 1.5rem;
+}
+
+.anchor {
+  text-decoration: none;
+  color: white;
+  font-size: 2rem;
+  padding-right: 2.5rem;
 }
 
 .fa-paw,
@@ -42,6 +50,11 @@ a {
 
 .card {
   box-shadow: 0 5px 5px rgba(48, 39, 39, 0.25);
+}
+
+.card-img-top {
+  height: 55vh;
+  object-fit: cover;
 }
 
 .card-title {
@@ -62,24 +75,16 @@ a {
   color: #abb5be;
 }
 
-.card-img-top {
-  height: 55vh;
-  object-fit: cover;
-}
-
-.anchor {
-  text-decoration: none;
-  color: white;
-  font-size: 2rem;
-  padding-right: 2.5rem;
-}
-
 .btn {
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.25);
 }
 
 #card-buttons > button {
   font-size: 2.5rem;
+}
+
+.carousel-radius {
+  border-radius: 5px;
 }
 
 .detail-h1 {
@@ -108,8 +113,4 @@ a {
 .fa-envelope,
 .fa-phone {
   color: #6ca4d0;
-}
-
-.carousel-radius {
-  border-radius: 5px;
 }
