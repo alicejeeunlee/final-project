@@ -48,13 +48,14 @@ export default class Discover extends React.Component {
           .map(x => x.replace('cats', 'other cats'))
           .map(x => x[0].toUpperCase() + x.slice(1))
           .join(', ');
-        const { name, distance, description, age, gender, size, url } = doggo;
-        const { name: org, email, phone } = organization;
+        const { id: doggoId, name, distance, description, age, gender, size, url } = doggo;
+        const { id: orgId, name: org, email, phone } = organization;
         const contact = organization.address;
         const address1 = organization.address.address1;
         const address2 = `${contact.city}, ${contact.state} ${contact.postcode}`;
         const location = `${contact.city}, ${contact.state}`;
         this.setState({
+          doggoId,
           name,
           distance,
           description,
@@ -66,6 +67,7 @@ export default class Discover extends React.Component {
           characteristics,
           health,
           home,
+          orgId,
           org,
           address1,
           address2,
