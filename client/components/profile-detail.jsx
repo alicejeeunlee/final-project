@@ -53,7 +53,7 @@ export default class ProfileDetail extends React.Component {
                 <h1 className='detail-h1 mt-3 mb-3'>Meet {this.props.data.name}</h1>
                 <div className='description-border pt-3 pb-3'>
                   <p className={this.props.data.description === '' ? 'd-none' : 'detail-p'}>{this.props.data.description}</p>
-                  <a href={this.props.data.url} className='detail-p d-flex justify-content-center'>Read More About {this.props.data.name}</a>
+                  <a href={this.props.data.url} target="_blank" rel="noopener noreferrer" className='detail-p d-flex justify-content-center'>Read More About {this.props.data.name}</a>
                 </div>
               </div>
             </div>
