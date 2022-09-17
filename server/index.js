@@ -93,20 +93,25 @@ app.get('/api/discover', (req, res, next) => {
 });
 
 app.post('/api/like', (req, res, next) => {
-  const { address1, address2, age, breed, characteristics, description, distance, doggoId, email, gender, health, home, location, name, org, orgId, phone, photos, size, url } = req.body;
+  const { address1, address2, age, breed, characteristics, description, distance, doggoId, email, gender, health, home, location, name, org, orgId, phone, photos, size, url, userId, isLiked } = req.body;
   const sql = `
     WITH "insertOrg" AS (
       INSERT INTO "organizations" ("petfinderOrgId", "organization", "address1", "address2", "email", "phone")
       VALUES ($1, $2, $3, $4, $5, $6)
       ON CONFLICT DO NOTHING
+    ),
+    "insertDoggo" AS (
+      INSERT INTO "dogs" ("petfinderDogId", "photoUrls", "name", "breed", "location", "age", "gender", "size", "distance", "description", "characteristics", "health", "home", "url", "petfinderOrgId")
+      VALUES ($7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $1)
+      ON CONFLICT DO NOTHING
     )
-    INSERT INTO "dogs" ("petfinderDogId", "photoUrls", "name", "breed", "location", "age", "gender", "size", "distance", "description", "characteristics", "health", "home", "url", "petfinderOrgId")
-    VALUES ($7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $1)
+    INSERT INTO "swipes" ("userId", "petfinderDogId", "isLiked")
+    VALUES ($21, $7, $22)
     RETURNING *
   `;
-  const params = [orgId, org, address1, address2, email, phone, doggoId, photos, name, breed, location, age, gender, size, distance, description, characteristics, health, home, url];
+  const params = [orgId, org, address1, address2, email, phone, doggoId, photos, name, breed, location, age, gender, size, distance, description, characteristics, health, home, url, userId, isLiked];
   db.query(sql, params)
-    .then(result => res.status(201).json(result.rows[0]))
+    .then(result => res.sendStatus(201))
     .catch(err => next(err));
 });
 

@@ -1,6 +1,30 @@
 import React from 'react';
 
 export default class ProfileCard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      swipe: null
+    };
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(event) {
+    if (event.target.classList.contains('btn-outline-success')) {
+      const reqBody = Object.assign(this.props.data, { isLiked: true });
+      fetch('/api/like', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(reqBody)
+      })
+        .then(res => {
+          if (!res.ok) throw new Error('Fetch failed at ProfileCard handeClick().');
+        });
+    }
+  }
+
   render() {
     return (
       <div className='row justify-content-center'>
@@ -20,7 +44,7 @@ export default class ProfileCard extends React.Component {
           </a>
           <div id="card-buttons" className='justify-content-between mt-4'>
             <button className='btn btn-outline-danger btn-lg pt-0 pb-0'>NOPE</button>
-            <button className='btn btn-outline-success btn-lg pt-0 pb-0'>LOVE</button>
+            <button className='btn btn-outline-success btn-lg pt-0 pb-0' onClick={this.handleClick}>LOVE</button>
           </div>
         </div>
       </div>

@@ -6,6 +6,7 @@ export default class Discover extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      userId: 1,
       photos: ['/images/woofles-placeholder.png']
     };
   }
@@ -90,7 +91,7 @@ export default class Discover extends React.Component {
           phone
         });
       })
-      .catch(err => console.error('Fetch failed at ProfileCard componentDidMount()', err));
+      .catch(err => console.error('Fetch failed at Discover componentDidMount().', err));
   }
 
   render() {
