@@ -20,8 +20,9 @@ export default class ProfileCard extends React.Component {
         body: JSON.stringify(reqBody)
       })
         .then(res => {
-          if (!res.ok) throw new Error('Fetch failed at ProfileCard handeClick().');
-        });
+          if (!res.ok) throw new Error('Fetch failed to POST');
+        })
+        .catch(err => console.error('Fetch failed at ProfileCard handeClick().', err));
     }
   }
 
