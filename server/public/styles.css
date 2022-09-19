@@ -50,6 +50,39 @@ a {
 
 .card {
   box-shadow: 0 5px 5px rgba(48, 39, 39, 0.25);
+  transform-origin: center bottom;
+}
+
+@keyframes love {
+  from {
+    transform: rotate(0deg);
+    opacity: 1;
+  }
+
+  to {
+    transform: rotate(40deg) translateY(-80px);
+    opacity: 0;
+  }
+}
+
+.card.love {
+  animation: love 0.7s ease-out;
+}
+
+.card-img-container {
+  position: relative;
+}
+
+.card-img-container img {
+  display: block;
+}
+
+.fa-face-grin-hearts {
+  color: #46d646;
+  font-size: 7rem;
+  position: absolute;
+  bottom: 1.5rem;
+  right: 1.5rem;
 }
 
 .card-img-top {

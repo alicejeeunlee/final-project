@@ -92,7 +92,7 @@ app.get('/api/discover', (req, res, next) => {
   }
 });
 
-app.post('/api/like', (req, res, next) => {
+app.post('/api/love', (req, res, next) => {
   const { address1, address2, age, breed, characteristics, description, distance, doggoId, email, gender, health, home, location, name, org, orgId, phone, photos, size, url, userId, isLiked } = req.body;
   const sql = `
     WITH "insertOrg" AS (
