@@ -48,6 +48,10 @@ a {
   font-size: 3rem;
 }
 
+#card-container {
+  overflow: hidden;
+}
+
 .card {
   box-shadow: 0 5px 5px rgba(48, 39, 39, 0.25);
   transform-origin: center bottom;
@@ -67,6 +71,7 @@ a {
 
 .card.love {
   animation: love 0.7s ease-out;
+  animation-fill-mode: forwards;
 }
 
 .card-img-container {

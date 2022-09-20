@@ -81,7 +81,7 @@ CREATE TABLE "emails" (
 
 CREATE TABLE "swipes" (
 	"userId" int NOT NULL,
-	"petfinderDogId" int NOT NULL,
+	"petfinderDogId" int NOT NULL UNIQUE,
 	"isLiked" BOOLEAN NOT NULL
 ) WITH (
   OIDS=FALSE

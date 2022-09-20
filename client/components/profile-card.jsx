@@ -4,7 +4,7 @@ export default class ProfileCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      swipe: null
+      swipeDirection: null
     };
     this.onTouchStart = this.onTouchStart.bind(this);
     this.swipe = {};
@@ -21,7 +21,9 @@ export default class ProfileCard extends React.Component {
     const diffX = event.changedTouches[0].screenX - this.swipe.x;
     if (diffX > this.threshold) {
       this.props.handleSwipeRight();
-      this.setState({ swipe: 'right' });
+      this.setState({
+        swipeDirection: 'right'
+      });
     }
     this.swipe = {};
   }
@@ -29,14 +31,20 @@ export default class ProfileCard extends React.Component {
   handleClick(event) {
     if (event.target.classList.contains('btn-outline-success')) {
       this.props.handleSwipeRight();
-      this.setState({ swipe: 'right' });
+      this.setState({ swipeDirection: 'right' });
+    }
+  }
+
+  componentDidUpdate(previousProps, previousState) {
+    if (this.props.data.doggoId !== previousProps.data.doggoId) {
+      this.setState({ swipeDirection: null });
     }
   }
 
   render() {
     let cardAnimation;
     let loveIcon;
-    if (this.state.swipe === 'right') {
+    if (this.state.swipeDirection === 'right') {
       cardAnimation = 'card love';
       loveIcon = 'fa-regular fa-face-grin-hearts';
     } else {
@@ -44,15 +52,15 @@ export default class ProfileCard extends React.Component {
       loveIcon = 'd-none';
     }
     return (
-      <div className='row justify-content-center'>
+      <div id='card-container' className='row justify-content-center'>
         <div className='col-md-9 col-lg-7 col-xl-6'>
           <a href="#details">
             <div className={cardAnimation}
             onTouchStart={this.onTouchStart}
             onTouchEnd={this.onTouchEnd}
-            onAnimationEnd={() => this.setState({ swipe: null })}>
+            >
               <div className='card-img-container'>
-                <img src={this.props.data.photos[0]} className='card-img-top' alt="" />
+                <img key={this.props.data.photos[0]} src={this.props.data.photos[0]} className='card-img-top' alt="" />
                 <i className={loveIcon}></i>
               </div>
               <div className='card-body'>

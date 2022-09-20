@@ -14,7 +14,7 @@ export default class Discover extends React.Component {
   }
 
   getDoggo() {
-    fetch('/api/discover', {
+    return fetch('/api/discover', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -24,11 +24,18 @@ export default class Discover extends React.Component {
       .then(data => {
         const doggo = data[0].animal;
         const organization = data[1].organization;
-        const photos = doggo.photos.map(x => x.full);
-        photos.length > 0 ? this.setState({ photos }) : this.setState({ photos: ['/images/woofles-placeholder.png'] });
-        const breeds = doggo.breeds;
-        const primaryBreed = breeds.primary;
-        breeds.mixed ? this.setState({ breed: primaryBreed + ' (mix)' }) : this.setState({ breed: primaryBreed });
+        let photos;
+        if (doggo.photos.length > 0) {
+          photos = doggo.photos.map(x => x.full);
+        } else {
+          photos = ['/images/woofles-placeholder.png'];
+        }
+        let breed;
+        if (doggo.breeds.mixed) {
+          breed = doggo.breeds.primary + ' (mix)';
+        } else {
+          breed = doggo.breeds.primary;
+        }
         const tags = doggo.tags;
         let characteristics;
         if (tags.length === 0) {
@@ -73,31 +80,33 @@ export default class Discover extends React.Component {
         const address2 = `${contact.city}, ${contact.state} ${contact.postcode}`;
         const location = `${contact.city}, ${contact.state}`;
         this.setState({
-          doggoId,
-          name,
-          distance,
-          description,
-          location,
-          age,
-          gender,
-          size,
-          url,
-          characteristics,
-          health,
-          home,
-          orgId,
-          org,
           address1,
           address2,
+          age,
+          breed,
+          characteristics,
+          description,
+          distance,
+          doggoId,
           email,
-          phone
+          gender,
+          health,
+          home,
+          location,
+          name,
+          org,
+          orgId,
+          phone,
+          photos,
+          size,
+          url
         });
       })
-      .catch(err => console.error('Fetch failed at Discover componentDidMount().', err));
+      .catch(err => console.error(err));
   }
 
   handleSwipeRight() {
-    const reqBody = Object.assign(this.state, { isLiked: true });
+    const reqBody = Object.assign({}, this.state, { isLiked: true });
     fetch('/api/love', {
       method: 'POST',
       headers: {
@@ -107,12 +116,9 @@ export default class Discover extends React.Component {
     })
       .then(res => {
         if (!res.ok) throw new Error('Fetch failed to POST');
+        this.getDoggo();
       })
-      .then(() => {
-        this.getDoggo()
-          .catch(err => console.error('Fetch failed at getDoggo() in handleSwipeRight().', err));
-      })
-      .catch(err => console.error('Fetch failed at Discover handleSwipeRight().', err));
+      .catch(err => console.error(err));
   }
 
   componentDidMount() {
