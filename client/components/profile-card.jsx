@@ -4,14 +4,13 @@ export default class ProfileCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLiked: null
+      swipe: null
     };
+    this.onTouchStart = this.onTouchStart.bind(this);
     this.swipe = {};
     this.threshold = 50;
-    this.onTouchStart = this.onTouchStart.bind(this);
     this.onTouchEnd = this.onTouchEnd.bind(this);
     this.handleClick = this.handleClick.bind(this);
-    this.love = this.love.bind(this);
   }
 
   onTouchStart(event) {
@@ -21,45 +20,40 @@ export default class ProfileCard extends React.Component {
   onTouchEnd(event) {
     const diffX = event.changedTouches[0].screenX - this.swipe.x;
     if (diffX > this.threshold) {
-      this.love();
-      this.setState({ isLiked: true });
+      this.props.handleSwipeRight();
+      this.setState({ swipe: 'right' });
     }
     this.swipe = {};
   }
 
   handleClick(event) {
     if (event.target.classList.contains('btn-outline-success')) {
-      this.love();
-      this.setState({ isLiked: true });
+      this.props.handleSwipeRight();
+      this.setState({ swipe: 'right' });
     }
   }
 
-  love() {
-    const reqBody = Object.assign(this.props.data, { isLiked: true });
-    fetch('/api/love', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(reqBody)
-    })
-      .then(res => {
-        if (!res.ok) throw new Error('Fetch failed to POST');
-      })
-      .catch(err => console.error('Fetch failed at ProfileCard handeClick().', err));
-  }
-
   render() {
+    let cardAnimation;
+    let loveIcon;
+    if (this.state.swipe === 'right') {
+      cardAnimation = 'card love';
+      loveIcon = 'fa-regular fa-face-grin-hearts';
+    } else {
+      cardAnimation = 'card';
+      loveIcon = 'd-none';
+    }
     return (
       <div className='row justify-content-center'>
         <div className='col-md-9 col-lg-7 col-xl-6'>
           <a href="#details">
-            <div className={this.state.isLiked ? 'card love' : 'card nope'}
+            <div className={cardAnimation}
             onTouchStart={this.onTouchStart}
-            onTouchEnd={this.onTouchEnd}>
+            onTouchEnd={this.onTouchEnd}
+            onAnimationEnd={() => this.setState({ swipe: null })}>
               <div className='card-img-container'>
                 <img src={this.props.data.photos[0]} className='card-img-top' alt="" />
-                <i className={this.state.isLiked ? 'fa-regular fa-face-grin-hearts' : 'd-none'}></i>
+                <i className={loveIcon}></i>
               </div>
               <div className='card-body'>
                 <div className='d-flex align-items-center'>

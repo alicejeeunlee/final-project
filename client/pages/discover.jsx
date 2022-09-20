@@ -9,9 +9,11 @@ export default class Discover extends React.Component {
       userId: 1,
       photos: ['/images/woofles-placeholder.png']
     };
+    this.getDoggo = this.getDoggo.bind(this);
+    this.handleSwipeRight = this.handleSwipeRight.bind(this);
   }
 
-  componentDidMount() {
+  getDoggo() {
     fetch('/api/discover', {
       method: 'GET',
       headers: {
@@ -94,6 +96,29 @@ export default class Discover extends React.Component {
       .catch(err => console.error('Fetch failed at Discover componentDidMount().', err));
   }
 
+  handleSwipeRight() {
+    const reqBody = Object.assign(this.state, { isLiked: true });
+    fetch('/api/love', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(reqBody)
+    })
+      .then(res => {
+        if (!res.ok) throw new Error('Fetch failed to POST');
+      })
+      .then(() => {
+        this.getDoggo()
+          .catch(err => console.error('Fetch failed at getDoggo() in handleSwipeRight().', err));
+      })
+      .catch(err => console.error('Fetch failed at Discover handleSwipeRight().', err));
+  }
+
+  componentDidMount() {
+    this.getDoggo();
+  }
+
   render() {
     const { route } = this.props.route;
     if (route.path === 'discover' || route.path === '') {
@@ -102,7 +127,9 @@ export default class Discover extends React.Component {
           <div className='row'>
             <h1 className='page-title mt-0 mb-0'>Henlo Fren</h1>
           </div>
-          <ProfileCard data={this.state} />
+          <ProfileCard data={this.state}
+          handleSwipeRight={this.handleSwipeRight}
+          getDoggo={this.getDoggo}/>
         </div>
       );
     }
