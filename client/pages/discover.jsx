@@ -134,8 +134,7 @@ export default class Discover extends React.Component {
             <h1 className='page-title mt-0 mb-0'>Henlo Fren</h1>
           </div>
           <ProfileCard data={this.state}
-          handleSwipeRight={this.handleSwipeRight}
-          getDoggo={this.getDoggo}/>
+          handleSwipeRight={this.handleSwipeRight}/>
         </div>
       );
     }

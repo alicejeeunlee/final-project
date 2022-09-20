@@ -21,6 +21,7 @@ const credentials = null;
 
 app.get('/api/discover', (req, res, next) => {
   discoverDoggo()
+    .then(results => res.json(results))
     .catch(err => next(err));
 
   function discoverDoggo() {
@@ -36,7 +37,7 @@ app.get('/api/discover', (req, res, next) => {
             if (isLiked) {
               return discoverDoggo();
             } else {
-              res.json([doggo, org]);
+              return [doggo, org];
             }
           });
       });
