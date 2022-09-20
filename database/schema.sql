@@ -8,19 +8,20 @@ create schema "public";
 
 CREATE TABLE "dogs" (
 	"petfinderDogId" int NOT NULL UNIQUE,
-	"photoUrl" TEXT NOT NULL,
+	"photoUrls" TEXT NOT NULL,
 	"name" TEXT NOT NULL,
 	"breed" TEXT NOT NULL,
 	"location" TEXT NOT NULL,
 	"age" TEXT NOT NULL,
 	"gender" TEXT NOT NULL,
 	"size" TEXT NOT NULL,
-	"color" TEXT NOT NULL,
+	"distance" TEXT,
 	"description" TEXT,
+	"characteristics" TEXT,
 	"health" TEXT,
-	"goodInAHomeWith" TEXT,
-	"adoptionFee" int,
-	"characteristics" TEXT
+	"home" TEXT,
+	"url" TEXT NOT NULL,
+	"petfinderOrgId" TEXT NOT NULL
 ) WITH (
   OIDS=FALSE
 );
@@ -28,11 +29,12 @@ CREATE TABLE "dogs" (
 
 
 CREATE TABLE "organizations" (
-	"petfinderOrgId" int NOT NULL UNIQUE,
-	"address" TEXT NOT NULL,
-	"email" TEXT NOT NULL,
-	"phone" int NOT NULL,
-	"petfinderDogId" int NOT NULL
+	"petfinderOrgId" TEXT NOT NULL UNIQUE,
+	"organization" TEXT NOT NULL,
+	"address1" TEXT,
+	"address2" TEXT NOT NULL,
+	"email" TEXT,
+	"phone" TEXT
 ) WITH (
   OIDS=FALSE
 );
@@ -41,7 +43,6 @@ CREATE TABLE "organizations" (
 
 CREATE TABLE "users" (
 	"userId" serial NOT NULL,
-	"username" TEXT NOT NULL UNIQUE,
 	"email" TEXT NOT NULL UNIQUE,
 	"name" TEXT NOT NULL,
 	"hashedPassword" TEXT NOT NULL,
@@ -66,7 +67,7 @@ CREATE TABLE "users" (
 CREATE TABLE "emails" (
 	"emailId" serial NOT NULL,
 	"userId" int NOT NULL,
-	"petfinderOrgId" bigint NOT NULL,
+	"petfinderOrgId" TEXT NOT NULL,
 	"petfinderDogId" int NOT NULL,
 	"additionalNotes" TEXT,
 	"emailSentAt" timestamptz NOT NULL,
@@ -79,7 +80,7 @@ CREATE TABLE "emails" (
 
 CREATE TABLE "swipes" (
 	"userId" int NOT NULL,
-	"petfinderDogId" int NOT NULL,
+	"petfinderDogId" int NOT NULL UNIQUE,
 	"isLiked" BOOLEAN NOT NULL
 ) WITH (
   OIDS=FALSE
@@ -87,8 +88,8 @@ CREATE TABLE "swipes" (
 
 
 
+ALTER TABLE "dogs" ADD CONSTRAINT "dogs_fk0" FOREIGN KEY ("petfinderOrgId") REFERENCES "organizations"("petfinderOrgId");
 
-ALTER TABLE "organizations" ADD CONSTRAINT "organizations_fk0" FOREIGN KEY ("petfinderDogId") REFERENCES "dogs"("petfinderDogId");
 
 
 ALTER TABLE "emails" ADD CONSTRAINT "emails_fk0" FOREIGN KEY ("userId") REFERENCES "users"("userId");
