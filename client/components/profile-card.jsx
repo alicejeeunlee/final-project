@@ -20,7 +20,7 @@ export default class ProfileCard extends React.Component {
   onTouchEnd(event) {
     const diffX = event.changedTouches[0].screenX - this.swipe.x;
     if (diffX > this.threshold) {
-      this.props.handleSwipeRight();
+      this.props.handleSwipe('right');
       this.setState({
         swipeDirection: 'right'
       });
@@ -30,7 +30,7 @@ export default class ProfileCard extends React.Component {
 
   handleClick(event) {
     if (event.target.classList.contains('btn-outline-success')) {
-      this.props.handleSwipeRight();
+      this.props.handleSwipe('right');
       this.setState({ swipeDirection: 'right' });
     }
   }

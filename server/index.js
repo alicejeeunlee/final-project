@@ -139,7 +139,7 @@ app.get('/api/discover', (req, res, next) => {
   }
 });
 
-app.post('/api/love', (req, res, next) => {
+app.post('/api/swipe', (req, res, next) => {
   const { address1, address2, age, breed, characteristics, description, distance, doggoId, email, gender, health, home, location, name, org, orgId, phone, photos, size, url, userId, isLiked } = req.body;
   const sql = `
     WITH "insertOrg" AS (
@@ -159,19 +159,6 @@ app.post('/api/love', (req, res, next) => {
   const params = [orgId, org, address1, address2, email, phone, doggoId, photos, name, breed, location, age, gender, size, distance, description, characteristics, health, home, url, userId, isLiked];
   db.query(sql, params)
     .then(result => res.sendStatus(201))
-    .catch(err => next(err));
-});
-
-app.post('/api/nope', (req, res, next) => {
-  const { userId, doggoId, isLiked } = req.body;
-  const sql = `
-    INSERT INTO "swipes" ("userId", "petfinderDogId", "isLiked")
-    VALUES ($1, $2, $3)
-    RETURNING *
-  `;
-  const params = [userId, doggoId, isLiked];
-  db.query(sql, params)
-    .then(result => res.json(result.rows))
     .catch(err => next(err));
 });
 
