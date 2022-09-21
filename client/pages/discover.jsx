@@ -107,7 +107,7 @@ export default class Discover extends React.Component {
 
   handleSwipeRight() {
     const reqBody = Object.assign({}, this.state, { isLiked: true });
-    fetch('/api/love', {
+    fetch('/api/swipe', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

@@ -53,9 +53,9 @@ app.get('/api/discover', (req, res, next) => {
           .all([getDoggo(credentials, hrefs.doggoHref), getOrg(credentials, hrefs.orgHref)]);
       })
       .then(([doggo, org]) => {
-        return isLikedByUser(1, doggo.animal.id)
-          .then(isLiked => {
-            if (isLiked) {
+        return isSwipedByUser(1, doggo.animal.id)
+          .then(isSwiped => {
+            if (isSwiped) {
               return discoverDoggo();
             } else {
               return [doggo, org];
@@ -124,7 +124,7 @@ app.get('/api/discover', (req, res, next) => {
       .then(res => res.json());
   }
 
-  function isLikedByUser(userId, doggoId) {
+  function isSwipedByUser(userId, doggoId) {
     const sql = `
           SELECT "petfinderDogId"
           FROM "swipes"
@@ -159,6 +159,19 @@ app.post('/api/love', (req, res, next) => {
   const params = [orgId, org, address1, address2, email, phone, doggoId, photos, name, breed, location, age, gender, size, distance, description, characteristics, health, home, url, userId, isLiked];
   db.query(sql, params)
     .then(result => res.sendStatus(201))
+    .catch(err => next(err));
+});
+
+app.post('/api/nope', (req, res, next) => {
+  const { userId, doggoId, isLiked } = req.body;
+  const sql = `
+    INSERT INTO "swipes" ("userId", "petfinderDogId", "isLiked")
+    VALUES ($1, $2, $3)
+    RETURNING *
+  `;
+  const params = [userId, doggoId, isLiked];
+  db.query(sql, params)
+    .then(result => res.json(result.rows))
     .catch(err => next(err));
 });
 
