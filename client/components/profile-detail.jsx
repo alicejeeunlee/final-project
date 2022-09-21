@@ -79,11 +79,11 @@ export default class ProfileDetail extends React.Component {
               <div className='col'>
                 <div className='about-border pt-3 pb-3'>
                   <h1 className='detail-h1'>About</h1>
-                  <h2 className={this.props.data.characteristics === '' ? 'd-none' : 'detail-h2 ms-3'}>Characteristics</h2>
+                  <h2 className={this.props.data.characteristics ? 'detail-h2 ms-3' : 'd-none'}>Characteristics</h2>
                   <p className='detail-p ms-5'>{this.props.data.characteristics}</p>
-                  <h2 className={this.props.data.health === '' ? 'd-none' : 'detail-h2 ms-3'}>Health</h2>
+                  <h2 className={this.props.data.health ? 'detail-h2 ms-3' : 'd-none'}>Health</h2>
                   <p className='detail-p ms-5'>{this.props.data.health}</p>
-                  <h2 className={this.props.data.home === '' ? 'd-none' : 'detail-h2 ms-3'}>Good In A Home With</h2>
+                  <h2 className={this.props.data.home ? 'detail-h2 ms-3' : 'd-none'}>Good In A Home With</h2>
                   <p className='detail-p ms-5'>{this.props.data.home}</p>
                 </div>
               </div>
