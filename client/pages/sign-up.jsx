@@ -35,9 +35,9 @@ export default class SignUp extends React.Component {
 
   render() {
     return (
-      <div className='container form-bg-img text-center'>
+      <div className='container-fluid form-bg-img text-center'>
         <div className='row justify-content-center'>
-          <div className='col-11 form-background mt-5 ms-3 me-3'>
+          <div className='col-11 col-sm-7 col-md-5 col-lg-4 col-xl-3 form-background mt-3 ms-3 me-3'>
             <h1 className='form-title mt-0 mb-0 pt-3'>Create An Account</h1>
             <h2 className='form-subtitle mb-4'>Find Your Forever Furry Friend</h2>
             <form onSubmit={this.handleSubmit}>
@@ -75,7 +75,7 @@ export default class SignUp extends React.Component {
                 placeholder='Password' />
               </div>
               <div className='input-group mb-4'>
-                <i id='basic-addon4' className='bi bi-geo-alt input-group-text'></i>
+                <i id='basic-addon4' className='bi bi-pin-map input-group-text'></i>
                 <input
                 required
                 id='location'

@@ -32,7 +32,7 @@ export default class App extends React.Component {
   render() {
     return (
       <>
-        <LogoNavbar />
+        <LogoNavbar route={this.state} />
         { this.renderPage() }
         <MobileNavbar />
       </>
