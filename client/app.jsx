@@ -19,12 +19,21 @@ export default class App extends React.Component {
     });
   }
 
+  renderPage() {
+    const { path } = this.state.route;
+    if (path === 'sign-up' || path === '') {
+      return <SignUp />;
+    }
+    if (path === 'discover' || path === 'details') {
+      return <Discover route={this.state} />;
+    }
+  }
+
   render() {
     return (
       <>
         <LogoNavbar />
-        <SignUp />
-        <Discover route={this.state}/>
+        { this.renderPage() }
         <MobileNavbar />
       </>
     );
