@@ -1,4 +1,5 @@
 import React from 'react';
+import SignUp from './pages/sign-up';
 import Discover from './pages/discover';
 import LogoNavbar from './components/logo-navbar';
 import MobileNavbar from './components/mobile-navbar';
@@ -22,6 +23,7 @@ export default class App extends React.Component {
     return (
       <>
         <LogoNavbar />
+        <SignUp />
         <Discover route={this.state}/>
         <MobileNavbar />
       </>
