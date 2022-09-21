@@ -44,6 +44,44 @@ a {
   font-size: 2.5rem;
 }
 
+.form-bg-img {
+  background-image: url("./images/doggo-background.jpeg");
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: absolute;
+  height: 80vh;
+  bottom: 72px;
+}
+
+.form-background {
+  background-color: #6ca4d0;
+  border-radius: 10px;
+}
+
+.form-title {
+  color: white;
+  font-size: 2.5rem;
+}
+
+.form-subtitle {
+  color: white;
+  font-size: 1.5rem;
+}
+
+.form-button {
+  width: 5rem;
+  height: 2rem;
+  border: none;
+  border-radius: 5px;
+  color: #6ca4d0;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.auth-button-text {
+  color: #6ca4d0;
+}
+
 .page-title {
   font-size: 3rem;
 }
@@ -113,4 +151,12 @@ a {
 .fa-envelope,
 .fa-phone {
   color: #6ca4d0;
+}
+
+@media only screen and (min-width: 768px) {
+  .form-bg-img {
+    padding-top: 1.5rem;
+    height: 92vh;
+    bottom: 0;
+  }
 }
