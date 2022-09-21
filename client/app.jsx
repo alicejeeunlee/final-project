@@ -1,4 +1,5 @@
 import React from 'react';
+import SignUp from './pages/sign-up';
 import Discover from './pages/discover';
 import LogoNavbar from './components/logo-navbar';
 import MobileNavbar from './components/mobile-navbar';
@@ -18,11 +19,21 @@ export default class App extends React.Component {
     });
   }
 
+  renderPage() {
+    const { path } = this.state.route;
+    if (path === 'sign-up' || path === '') {
+      return <SignUp />;
+    }
+    if (path === 'discover' || path === 'details') {
+      return <Discover route={this.state} />;
+    }
+  }
+
   render() {
     return (
       <>
-        <LogoNavbar />
-        <Discover route={this.state}/>
+        <LogoNavbar route={this.state} />
+        { this.renderPage() }
         <MobileNavbar />
       </>
     );

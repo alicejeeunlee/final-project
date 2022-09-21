@@ -43,7 +43,6 @@ CREATE TABLE "organizations" (
 
 CREATE TABLE "users" (
 	"userId" serial NOT NULL,
-	"username" TEXT NOT NULL UNIQUE,
 	"email" TEXT NOT NULL UNIQUE,
 	"name" TEXT NOT NULL,
 	"hashedPassword" TEXT NOT NULL,

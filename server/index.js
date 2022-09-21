@@ -3,6 +3,7 @@ const pg = require('pg');
 const express = require('express');
 const staticMiddleware = require('./static-middleware');
 const errorMiddleware = require('./error-middleware');
+const argon2 = require('argon2');
 const fetch = require('node-fetch');
 
 const db = new pg.Pool({
@@ -18,6 +19,26 @@ app.use(staticMiddleware);
 app.use(express.json());
 
 const credentials = null;
+
+app.post('/api/auth/sign-up', (req, res, next) => {
+  const { email, name, password, location } = req.body;
+  argon2
+    .hash(password)
+    .then(hashedPassword => {
+      const sql = `
+        INSERT INTO "users" ("email", "name", "hashedPassword", "location")
+        VALUES ($1, $2, $3, $4)
+        RETURNING "userId", "email", "location"
+      `;
+      const params = [email, name, hashedPassword, location];
+      return db.query(sql, params);
+    })
+    .then(result => {
+      const [user] = result.rows;
+      res.status(201).json(user);
+    })
+    .catch(err => next(err));
+});
 
 app.get('/api/discover', (req, res, next) => {
   discoverDoggo()
