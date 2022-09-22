@@ -1,9 +1,10 @@
 import React from 'react';
-import SignUp from './pages/sign-up';
+import AuthForm from './pages/auth';
 import Discover from './pages/discover';
 import LogoNavbar from './components/logo-navbar';
 import MobileNavbar from './components/mobile-navbar';
 import parseRoute from './lib/parse-route';
+import AppContext from './lib/app-context';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -21,21 +22,28 @@ export default class App extends React.Component {
 
   renderPage() {
     const { path } = this.state.route;
-    if (path === 'sign-up' || path === '') {
-      return <SignUp />;
+    if (this.state.isAuthorizing || path === 'sign-up' || path === 'sign-in') {
+      return <AuthForm route={this.state} onSignIn={this.handleSignIn} />;
     }
     if (path === 'discover' || path === 'details') {
-      return <Discover route={this.state} />;
+      return <Discover state={this.state} />;
     }
   }
 
   render() {
+    const { user, route } = this.state;
+    const contextValue = { user, route };
     return (
-      <>
-        <LogoNavbar route={this.state} />
-        { this.renderPage() }
-        <MobileNavbar />
-      </>
+      <AppContext.Provider value={contextValue}>
+        <>
+          <LogoNavbar route={this.state} />
+          {this.renderPage()}
+          <MobileNavbar />
+        </>
+      </AppContext.Provider>
+
     );
   }
 }
+
+App.contextType = AppContext;

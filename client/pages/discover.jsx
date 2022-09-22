@@ -1,12 +1,12 @@
 import React from 'react';
 import ProfileCard from '../components/profile-card';
 import ProfileDetail from '../components/profile-detail';
+import AppContext from '../lib/app-context';
 
 export default class Discover extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userId: 1,
       photos: ['/images/woofles-placeholder.png']
     };
     this.getDoggo = this.getDoggo.bind(this);
@@ -131,7 +131,7 @@ export default class Discover extends React.Component {
   }
 
   render() {
-    const { route } = this.props.route;
+    const { route } = this.props.state;
     if (route.path === 'discover') {
       return (
         <div className='container'>
@@ -148,3 +148,5 @@ export default class Discover extends React.Component {
     }
   }
 }
+
+Discover.contextType = AppContext;

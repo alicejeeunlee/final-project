@@ -1,10 +1,12 @@
 require('dotenv/config');
 const pg = require('pg');
 const express = require('express');
+const fetch = require('node-fetch');
+const argon2 = require('argon2');
+const jwt = require('jsonwebtoken');
 const staticMiddleware = require('./static-middleware');
 const errorMiddleware = require('./error-middleware');
-const argon2 = require('argon2');
-const fetch = require('node-fetch');
+const ClientError = require('./client-error');
 
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
@@ -40,7 +42,40 @@ app.post('/api/auth/sign-up', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.get('/api/discover', (req, res, next) => {
+app.post('/api/auth/sign-in', (req, res, next) => {
+  const { email, password } = req.body;
+  const sql = `
+    SELECT "userId",
+           "hashedPassword",
+           "name"
+    FROM "users"
+    WHERE "email" = $1
+  `;
+  const params = [email];
+  db.query(sql, params)
+    .then(result => {
+      const [user] = result.rows;
+      if (!user) {
+        throw new ClientError(401, 'invalid login');
+      }
+      const { userId, name, hashedPassword } = user;
+      return argon2
+        .verify(hashedPassword, password)
+        .then(isMatching => {
+          if (!isMatching) {
+            throw new ClientError(401, 'invalid login');
+          }
+          const payload = { userId, name };
+          const token = jwt.sign(payload, process.env.TOKEN_SECRET);
+          res.json({ token, user: payload });
+        });
+    })
+    .catch(err => next(err));
+});
+
+app.post('/api/discover', (req, res, next) => {
+  const { userId } = req.body;
+
   discoverDoggo()
     .then(results => res.json(results))
     .catch(err => next(err));
@@ -53,7 +88,7 @@ app.get('/api/discover', (req, res, next) => {
           .all([getDoggo(credentials, hrefs.doggoHref), getOrg(credentials, hrefs.orgHref)]);
       })
       .then(([doggo, org]) => {
-        return isSwipedByUser(1, doggo.animal.id)
+        return isSwipedByUser(userId, doggo.animal.id)
           .then(isSwiped => {
             if (isSwiped) {
               return discoverDoggo();
