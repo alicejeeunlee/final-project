@@ -10,7 +10,7 @@ export default class Discover extends React.Component {
       photos: ['/images/woofles-placeholder.png']
     };
     this.getDoggo = this.getDoggo.bind(this);
-    this.handleSwipeRight = this.handleSwipeRight.bind(this);
+    this.handleSwipe = this.handleSwipe.bind(this);
   }
 
   getDoggo() {
@@ -105,9 +105,14 @@ export default class Discover extends React.Component {
       .catch(err => console.error(err));
   }
 
-  handleSwipeRight() {
-    const reqBody = Object.assign({}, this.state, { isLiked: true });
-    fetch('/api/love', {
+  handleSwipe(direction) {
+    let reqBody;
+    if (direction === 'right') {
+      reqBody = Object.assign({}, this.state, { isLiked: true });
+    } else if (direction === 'left') {
+      reqBody = Object.assign({}, this.state, { isLiked: false });
+    }
+    fetch('/api/swipe', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -134,7 +139,7 @@ export default class Discover extends React.Component {
             <h1 className='page-title mt-0 mb-0'>Henlo Fren</h1>
           </div>
           <ProfileCard data={this.state}
-          handleSwipeRight={this.handleSwipeRight}/>
+          handleSwipe={this.handleSwipe}/>
         </div>
       );
     }

@@ -20,18 +20,22 @@ export default class ProfileCard extends React.Component {
   onTouchEnd(event) {
     const diffX = event.changedTouches[0].screenX - this.swipe.x;
     if (diffX > this.threshold) {
-      this.props.handleSwipeRight();
-      this.setState({
-        swipeDirection: 'right'
-      });
+      this.props.handleSwipe('right');
+      this.setState({ swipeDirection: 'right' });
+    } else if (diffX < -(this.threshold)) {
+      this.props.handleSwipe('left');
+      this.setState({ swipeDirection: 'left' });
     }
     this.swipe = {};
   }
 
   handleClick(event) {
     if (event.target.classList.contains('btn-outline-success')) {
-      this.props.handleSwipeRight();
+      this.props.handleSwipe('right');
       this.setState({ swipeDirection: 'right' });
+    } else if (event.target.classList.contains('btn-outline-danger')) {
+      this.props.handleSwipe('left');
+      this.setState({ swipeDirection: 'left' });
     }
   }
 
@@ -43,13 +47,16 @@ export default class ProfileCard extends React.Component {
 
   render() {
     let cardAnimation;
-    let loveIcon;
+    let showIcon;
     if (this.state.swipeDirection === 'right') {
       cardAnimation = 'card love';
-      loveIcon = 'fa-regular fa-face-grin-hearts';
+      showIcon = 'fa-regular fa-face-grin-hearts';
+    } else if (this.state.swipeDirection === 'left') {
+      cardAnimation = 'card nope';
+      showIcon = 'fa-regular fa-face-meh';
     } else {
       cardAnimation = 'card';
-      loveIcon = 'd-none';
+      showIcon = 'd-none';
     }
     return (
       <div id='card-container' className='row justify-content-center'>
@@ -61,7 +68,7 @@ export default class ProfileCard extends React.Component {
             >
               <div className='card-img-container'>
                 <img key={this.props.data.photos[0]} src={this.props.data.photos[0]} className='card-img-top' alt="" />
-                <i className={loveIcon}></i>
+                <i className={showIcon}></i>
               </div>
               <div className='card-body'>
                 <div className='d-flex align-items-center'>
@@ -74,7 +81,7 @@ export default class ProfileCard extends React.Component {
             </div>
           </a>
           <div id="card-buttons" className='justify-content-between mt-4'>
-            <button className='btn btn-outline-danger btn-lg pt-0 pb-0'>NOPE</button>
+            <button className='btn btn-outline-danger btn-lg pt-0 pb-0' onClick={this.handleClick}>NOPE</button>
             <button className='btn btn-outline-success btn-lg pt-0 pb-0' onClick={this.handleClick}>LOVE</button>
           </div>
         </div>
