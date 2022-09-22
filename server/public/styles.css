@@ -107,8 +107,25 @@ a {
   }
 }
 
+@keyframes nope {
+  from {
+    transform: rotate(0deg);
+    opacity: 1;
+  }
+
+  to {
+    transform: rotate(-40deg) translateY(-80px);
+    opacity: 0;
+  }
+}
+
 .card.love {
   animation: love 0.7s ease-out;
+  animation-fill-mode: forwards;
+}
+
+.card.nope {
+  animation: nope 0.7s ease-out;
   animation-fill-mode: forwards;
 }
 
@@ -126,6 +143,14 @@ a {
   position: absolute;
   bottom: 1.5rem;
   right: 1.5rem;
+}
+
+.fa-face-meh {
+  color: #f00;
+  font-size: 7rem;
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1.5rem;
 }
 
 .card-img-top {
