@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 const staticMiddleware = require('./static-middleware');
 const errorMiddleware = require('./error-middleware');
 const ClientError = require('./client-error');
+const authorizationMiddleware = require('./authorization-middleware');
 
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
@@ -73,9 +74,10 @@ app.post('/api/auth/sign-in', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.post('/api/discover', (req, res, next) => {
-  const { userId } = req.body;
+app.use(authorizationMiddleware);
 
+app.get('/api/discover', (req, res, next) => {
+  const { userId } = req.user;
   discoverDoggo()
     .then(results => res.json(results))
     .catch(err => next(err));
@@ -175,7 +177,8 @@ app.post('/api/discover', (req, res, next) => {
 });
 
 app.post('/api/swipe', (req, res, next) => {
-  const { address1, address2, age, breed, characteristics, description, distance, doggoId, email, gender, health, home, location, name, org, orgId, phone, photos, size, url, userId, isLiked } = req.body;
+  const { userId } = req.user;
+  const { address1, address2, age, breed, characteristics, description, distance, doggoId, email, gender, health, home, location, name, org, orgId, phone, photos, size, url, isLiked } = req.body;
   const sql = `
     WITH "insertOrg" AS (
       INSERT INTO "organizations" ("petfinderOrgId", "organization", "address1", "address2", "email", "phone")

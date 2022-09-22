@@ -14,13 +14,12 @@ export default class Discover extends React.Component {
   }
 
   getDoggo() {
-    const { userId } = this.context.user;
     return fetch('/api/discover', {
-      method: 'POST',
+      method: 'GET',
       headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ userId })
+        'Content-Type': 'application/json',
+        'X-Access-Token': window.localStorage.getItem('woofles-jwt')
+      }
     })
       .then(res => res.json())
       .then(data => {
@@ -101,8 +100,7 @@ export default class Discover extends React.Component {
           phone,
           photos,
           size,
-          url,
-          userId
+          url
         });
       })
       .catch(err => console.error(err));
@@ -118,7 +116,8 @@ export default class Discover extends React.Component {
     fetch('/api/swipe', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'X-Access-Token': window.localStorage.getItem('woofles-jwt')
       },
       body: JSON.stringify(reqBody)
     })
