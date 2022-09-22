@@ -14,11 +14,13 @@ export default class Discover extends React.Component {
   }
 
   getDoggo() {
+    const { userId } = this.context.user;
     return fetch('/api/discover', {
-      method: 'GET',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json'
-      }
+      },
+      body: JSON.stringify({ userId })
     })
       .then(res => res.json())
       .then(data => {
@@ -99,7 +101,8 @@ export default class Discover extends React.Component {
           phone,
           photos,
           size,
-          url
+          url,
+          userId
         });
       })
       .catch(err => console.error(err));

@@ -30,7 +30,7 @@ export default class AuthForm extends React.Component {
     })
       .then(res => res.json())
       .then(result => {
-        if (route.path === 'sign-up') {
+        if (route.path === 'sign-up' || route.path === '') {
           window.location.hash = 'sign-in';
         } else if (result.user && result.token) {
           this.props.onSignIn(result);
@@ -41,12 +41,12 @@ export default class AuthForm extends React.Component {
 
   render() {
     const { route } = this.props.route;
-    const welcomeMessage = route.path === 'sign-up' ? 'Create an Account' : 'Sign In';
-    const signUpInput = route.path === 'sign-up' ? 'input-group mb-3' : 'd-none';
-    const hrefButton = route.path === 'sign-up' ? 'Login' : 'New User';
-    const altHref = route.path === 'sign-up' ? '#sign-in' : '#sign-up';
-    const submitButton = route.path === 'sign-up' ? 'Sign Up' : 'Login';
-    const isRequired = route.path === 'sign-up';
+    const welcomeMessage = route.path === 'sign-in' ? 'Sign In' : 'Create an Account';
+    const signUpInput = route.path === 'sign-in' ? 'd-none' : 'input-group mb-3';
+    const hrefButton = route.path === 'sign-in' ? 'New User' : 'Login';
+    const altHref = route.path === 'sign-in' ? '#sign-up' : '#sign-in';
+    const submitButton = route.path === 'sign-in' ? 'Login' : 'Sign Up';
+    const isRequired = route.path !== 'sign-in';
     return (
       <div className='container-fluid form-bg-img text-center'>
         <div className='row justify-content-center'>
