@@ -23,6 +23,7 @@ export default class ProfileCard extends React.Component {
       this.props.handleSwipe('right');
       this.setState({ swipeDirection: 'right' });
     } else if (diffX < -(this.threshold)) {
+      this.props.handleSwipe('left');
       this.setState({ swipeDirection: 'left' });
     }
     this.swipe = {};
@@ -33,6 +34,7 @@ export default class ProfileCard extends React.Component {
       this.props.handleSwipe('right');
       this.setState({ swipeDirection: 'right' });
     } else if (event.target.classList.contains('btn-outline-danger')) {
+      this.props.handleSwipe('left');
       this.setState({ swipeDirection: 'left' });
     }
   }

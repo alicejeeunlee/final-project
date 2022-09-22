@@ -109,6 +109,8 @@ export default class Discover extends React.Component {
     let reqBody;
     if (direction === 'right') {
       reqBody = Object.assign({}, this.state, { isLiked: true });
+    } else if (direction === 'left') {
+      reqBody = Object.assign({}, this.state, { isLiked: false });
     }
     fetch('/api/swipe', {
       method: 'POST',
