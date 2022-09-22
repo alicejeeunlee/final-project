@@ -4,7 +4,7 @@ export default class LogoNavbar extends React.Component {
   render() {
     const { route } = this.props.route;
     let navAnchor;
-    if (route.path === 'sign-up') {
+    if (route.path === 'sign-up' || route.path === 'sign-in' || route.path === '') {
       navAnchor = 'd-none';
     } else {
       navAnchor = '';
