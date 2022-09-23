@@ -1,6 +1,32 @@
 import React from 'react';
 
 export default class Favorites extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      likedDogs: null
+    };
+    this.getLikedDogs = this.getLikedDogs.bind(this);
+  }
+
+  getLikedDogs() {
+    return fetch('/api/favorites', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Access-Token': window.localStorage.getItem('woofles-jwt')
+      }
+    })
+      .then(res => res.json())
+      .then(likedDogs => this.setState({
+        likedDogs
+      }));
+  }
+
+  componentDidMount() {
+    this.getLikedDogs();
+  }
+
   render() {
     return (
       <div className='container'>

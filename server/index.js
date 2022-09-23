@@ -202,7 +202,7 @@ app.get('/api/favorites', (req, res, next) => {
   const { userId } = req.user;
   const isLiked = true;
   const sql = `
-    SELECT "petfinderDogId", "name", "distance"
+    SELECT "petfinderDogId", "photoUrls", "name", "distance"
     FROM "dogs"
     JOIN "swipes" USING ("petfinderDogId")
     WHERE "userId" = $1 AND "isLiked" = $2
