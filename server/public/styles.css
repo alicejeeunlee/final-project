@@ -216,6 +216,29 @@ a {
   color: #6ca4d0;
 }
 
+.circle-img-container {
+  width: 8rem;
+  height: 8rem;
+  border: 1px solid black;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.favorites-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.favorites-name {
+  font-size: 2rem;
+}
+
+.favorites-text {
+  color: #abb5be;
+  font-size: 1.3rem;
+}
+
 @media only screen and (min-width: 768px) {
   .form-bg-img {
     padding-top: 1.5rem;
