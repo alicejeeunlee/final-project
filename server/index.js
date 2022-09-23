@@ -149,19 +149,6 @@ app.get('/api/discover', (req, res, next) => {
       });
   }
 
-  // function getDoggo(credentials, doggoHref) {
-  //   const params = new URLSearchParams({
-  //     location: 'Irvine, CA'
-  //   }).toString();
-  //   return fetch('https://api.petfinder.com' + doggoHref + '?' + params, {
-  //     headers: {
-  //       Authorization: credentials.tokenType + ' ' + credentials.token,
-  //       'Content-Type': 'application/json'
-  //     }
-  //   })
-  //     .then(res => res.json());
-  // }
-
   function getOrg(credentials, orgHref) {
     return fetch('https://api.petfinder.com' + orgHref, {
       headers: {
@@ -208,6 +195,24 @@ app.post('/api/swipe', (req, res, next) => {
   const params = [orgId, org, address1, address2, email, phone, doggoId, photos, name, breed, location, age, gender, size, distance, description, characteristics, health, home, url, userId, isLiked];
   db.query(sql, params)
     .then(result => res.sendStatus(201))
+    .catch(err => next(err));
+});
+
+app.get('/api/favorites', (req, res, next) => {
+  const { userId } = req.user;
+  const isLiked = true;
+  const sql = `
+    SELECT "petfinderDogId", "name", "distance"
+    FROM "dogs"
+    JOIN "swipes" USING ("petfinderDogId")
+    WHERE "userId" = $1 AND "isLiked" = $2
+  `;
+  const params = [userId, isLiked];
+  db.query(sql, params)
+    .then(result => {
+      const favorites = result.rows;
+      res.status(200).json(favorites);
+    })
     .catch(err => next(err));
 });
 
