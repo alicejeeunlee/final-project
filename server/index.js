@@ -210,8 +210,8 @@ app.get('/api/favorites', (req, res, next) => {
   const params = [userId, isLiked];
   db.query(sql, params)
     .then(result => {
-      const favorites = result.rows;
-      res.status(200).json(favorites);
+      const likedDogs = result.rows;
+      res.status(200).json(likedDogs);
     })
     .catch(err => next(err));
 });
