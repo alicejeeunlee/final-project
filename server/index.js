@@ -48,7 +48,8 @@ app.post('/api/auth/sign-in', (req, res, next) => {
   const sql = `
     SELECT "userId",
            "hashedPassword",
-           "name"
+           "name",
+           "location"
     FROM "users"
     WHERE "email" = $1
   `;
@@ -59,14 +60,14 @@ app.post('/api/auth/sign-in', (req, res, next) => {
       if (!user) {
         throw new ClientError(401, 'invalid login');
       }
-      const { userId, name, hashedPassword } = user;
+      const { userId, name, hashedPassword, location } = user;
       return argon2
         .verify(hashedPassword, password)
         .then(isMatching => {
           if (!isMatching) {
             throw new ClientError(401, 'invalid login');
           }
-          const payload = { userId, name };
+          const payload = { userId, name, location };
           const token = jwt.sign(payload, process.env.TOKEN_SECRET);
           res.json({ token, user: payload });
         });
@@ -77,20 +78,24 @@ app.post('/api/auth/sign-in', (req, res, next) => {
 app.use(authorizationMiddleware);
 
 app.get('/api/discover', (req, res, next) => {
-  const { userId } = req.user;
+  const { userId, location } = req.user;
   discoverDoggo()
     .then(results => res.json(results))
     .catch(err => next(err));
 
   function discoverDoggo() {
     return getOAuth()
-      .then(getHrefs)
-      .then(([credentials, hrefs]) => {
-        return Promise
-          .all([getDoggo(credentials, hrefs.doggoHref), getOrg(credentials, hrefs.orgHref)]);
+      .then(credentials => {
+        return getDoggo(credentials);
       })
-      .then(([doggo, org]) => {
-        return isSwipedByUser(userId, doggo.animal.id)
+      .then(({ credentials, orgHref }) => {
+        return Promise
+          .all([getDoggo(credentials), getOrg(credentials, orgHref)]);
+      })
+      .then(data => {
+        const doggo = data[0].doggo;
+        const org = data[1].organization;
+        return isSwipedByUser(userId, doggo.id)
           .then(isSwiped => {
             if (isSwiped) {
               return discoverDoggo();
@@ -122,8 +127,13 @@ app.get('/api/discover', (req, res, next) => {
       });
   }
 
-  function getHrefs(credentials) {
-    return fetch('https://api.petfinder.com/v2/animals?type=dog&limit=1', {
+  function getDoggo(credentials) {
+    const params = new URLSearchParams({
+      type: 'dog',
+      location,
+      limit: '1'
+    }).toString();
+    return fetch(`https://api.petfinder.com/v2/animals?${params}`, {
       headers: {
         Authorization: credentials.tokenType + ' ' + credentials.token,
         'Content-Type': 'application/json'
@@ -131,25 +141,26 @@ app.get('/api/discover', (req, res, next) => {
     })
       .then(res => res.json())
       .then(data => {
-        return [
+        return {
           credentials,
-          {
-            doggoHref: data.animals[0]._links.self.href,
-            orgHref: data.animals[0]._links.organization.href
-          }
-        ];
+          doggo: data.animals[0],
+          orgHref: data.animals[0]._links.organization.href
+        };
       });
   }
 
-  function getDoggo(credentials, doggoHref) {
-    return fetch('https://api.petfinder.com' + doggoHref, {
-      headers: {
-        Authorization: credentials.tokenType + ' ' + credentials.token,
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(res => res.json());
-  }
+  // function getDoggo(credentials, doggoHref) {
+  //   const params = new URLSearchParams({
+  //     location: 'Irvine, CA'
+  //   }).toString();
+  //   return fetch('https://api.petfinder.com' + doggoHref + '?' + params, {
+  //     headers: {
+  //       Authorization: credentials.tokenType + ' ' + credentials.token,
+  //       'Content-Type': 'application/json'
+  //     }
+  //   })
+  //     .then(res => res.json());
+  // }
 
   function getOrg(credentials, orgHref) {
     return fetch('https://api.petfinder.com' + orgHref, {

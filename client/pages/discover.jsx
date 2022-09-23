@@ -23,8 +23,8 @@ export default class Discover extends React.Component {
     })
       .then(res => res.json())
       .then(data => {
-        const doggo = data[0].animal;
-        const organization = data[1].organization;
+        const doggo = data[0];
+        const organization = data[1];
         let photos;
         if (doggo.photos.length > 0) {
           photos = doggo.photos.map(x => x.full);
