@@ -1,8 +1,9 @@
 import React from 'react';
 import jwtDecode from 'jwt-decode';
+import LogoNavbar from './components/logo-navbar';
 import AuthForm from './pages/auth';
 import Discover from './pages/discover';
-import LogoNavbar from './components/logo-navbar';
+import Favorites from './pages/favorites';
 import MobileNavbar from './components/mobile-navbar';
 import parseRoute from './lib/parse-route';
 import AppContext from './lib/app-context';
@@ -40,6 +41,9 @@ export default class App extends React.Component {
     }
     if (path === 'discover' || path === 'details') {
       return <Discover state={this.state} />;
+    }
+    if (path === 'favorites') {
+      return <Favorites />;
     }
   }
 
