@@ -7,6 +7,7 @@ export default class Favorites extends React.Component {
       likedDogs: null
     };
     this.getLikedDogs = this.getLikedDogs.bind(this);
+    this.makeListItem = this.makeListItem.bind(this);
   }
 
   getLikedDogs() {
@@ -21,6 +22,22 @@ export default class Favorites extends React.Component {
       .then(likedDogs => this.setState({
         likedDogs
       }));
+  }
+
+  makeListItem() {
+    return this.state.likedDogs.map((doggo, index) => {
+      return (
+        <a href="favorites" key={index} className='d-flex pt-3 pb-3 align-items-center list-group-item list-group-item-action'>
+          <div className='circle-img-container'>
+            <img src="/images/woofles-placeholder.png" className='favorites-img' alt="" />
+          </div>
+          <div className='ps-4'>
+            <h1 className='favorites-name mb-0'>{doggo.name}</h1>
+            <p className={doggo.distance ? 'favorites-text mb-0' : 'd-none'}>{Math.round(doggo.distance)} miles away</p>
+          </div>
+        </a>
+      );
+    });
   }
 
   componentDidMount() {
@@ -38,33 +55,7 @@ export default class Favorites extends React.Component {
         <div className='row justify-content-center'>
           <div className='col col-md-6'>
             <div className='list-group'>
-              <a href="" className='d-flex align-items-center list-group-item list-group-item-action'>
-                <div className='circle-img-container'>
-                  <img src="/images/woofles-placeholder.png" className='favorites-img' alt="" />
-                </div>
-                <div className='ps-4'>
-                  <h1 className='favorites-name mb-0'>Name</h1>
-                  <p className='favorites-text mb-0'>xxx miles away</p>
-                </div>
-              </a>
-              <a href="" className='d-flex align-items-center list-group-item list-group-item-action'>
-                <div className='circle-img-container'>
-                  <img src="/images/woofles-placeholder.png" className='favorites-img' alt="" />
-                </div>
-                <div className='ps-4'>
-                  <h1 className='favorites-name mb-0'>Name</h1>
-                  <p className='favorites-text mb-0'>xxx miles away</p>
-                </div>
-              </a>
-              <a href="" className='d-flex align-items-center list-group-item list-group-item-action'>
-                <div className='circle-img-container'>
-                  <img src="/images/woofles-placeholder.png" className='favorites-img' alt="" />
-                </div>
-                <div className='ps-4'>
-                  <h1 className='favorites-name mb-0'>Name</h1>
-                  <p className='favorites-text mb-0'>xxx miles away</p>
-                </div>
-              </a>
+              {this.state.likedDogs === null ? null : this.makeListItem()}
             </div>
           </div>
         </div>

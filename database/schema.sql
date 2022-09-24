@@ -8,7 +8,7 @@ create schema "public";
 
 CREATE TABLE "dogs" (
 	"petfinderDogId" int NOT NULL UNIQUE,
-	"photoUrls" TEXT NOT NULL,
+	"photoUrls" json NOT NULL,
 	"name" TEXT NOT NULL,
 	"breed" TEXT NOT NULL,
 	"location" TEXT NOT NULL,
