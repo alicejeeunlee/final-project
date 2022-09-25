@@ -97,8 +97,10 @@ app.get('/api/discover', (req, res, next) => {
       //     .all([getDoggo(credentials), getOrg(credentials, orgHref)]);
       // })
       .then(data => {
-        const doggo = data[0].doggo;
+        const doggo = data[0];
         const org = data[1].organization;
+        // console.log('doggo:', doggo);
+        // console.log('org:', org);
         return isSwipedByUser(userId, doggo.id)
           .then(isSwiped => {
             if (isSwiped) {
