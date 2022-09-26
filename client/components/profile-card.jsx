@@ -76,7 +76,7 @@ export default class ProfileCard extends React.Component {
                   <i className={this.props.data.breed ? 'fa-solid fa-bone ms-2 me-2' : 'd-none'}></i>
                   <h3 className='card-subtitle mt-0 mb-0'>{this.props.data.breed}</h3>
                 </div>
-                <h4 className={this.props.data.distance ? 'card-text' : 'd-none'}>{Math.round(this.props.data.distance)} miles away</h4>
+                <h4 className={this.props.data.location ? 'card-text' : 'd-none'}>{this.props.data.location}</h4>
               </div>
             </div>
           </a>

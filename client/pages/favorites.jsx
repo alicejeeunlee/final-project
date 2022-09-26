@@ -29,11 +29,11 @@ export default class Favorites extends React.Component {
       return (
         <a href="favorites" key={index} className='d-flex pt-3 pb-3 align-items-center list-group-item list-group-item-action'>
           <div className='circle-img-container'>
-            <img src="/images/woofles-placeholder.png" className='favorites-img' alt="" />
+            <img src={doggo.photoUrls[0]} className='favorites-img' alt="" />
           </div>
           <div className='ps-4'>
             <h1 className='favorites-name mb-0'>{doggo.name}</h1>
-            <p className={doggo.distance ? 'favorites-text mb-0' : 'd-none'}>{Math.round(doggo.distance)} miles away</p>
+            <p className={doggo.location ? 'favorites-text mb-0' : 'd-none'}>{doggo.location}</p>
           </div>
         </a>
       );

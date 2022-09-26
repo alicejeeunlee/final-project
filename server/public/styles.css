@@ -173,6 +173,7 @@ a {
 }
 
 .card-text {
+  font-size: 1.5rem;
   color: #abb5be;
 }
 
@@ -217,9 +218,8 @@ a {
 }
 
 .circle-img-container {
-  width: 8rem;
-  height: 8rem;
-  border: 2px solid #6ca4d0;
+  width: 9rem;
+  height: 9rem;
   border-radius: 50%;
   overflow: hidden;
 }
