@@ -53,8 +53,10 @@ app.get('/api/discover', (req, res, next) => {
           .all([getDoggo(credentials, hrefs.doggoHref), getOrg(credentials, hrefs.orgHref)]);
       })
       .then(([doggo, org]) => {
+        // console.log('doggo:', doggo);
         return isSwipedByUser(1, doggo.animal.id)
           .then(isSwiped => {
+            // console.log(isSwiped);
             if (isSwiped) {
               return discoverDoggo();
             } else {
@@ -141,6 +143,7 @@ app.get('/api/discover', (req, res, next) => {
 
 app.post('/api/swipe', (req, res, next) => {
   const { address1, address2, age, breed, characteristics, description, distance, doggoId, email, gender, health, home, location, name, org, orgId, phone, photos, size, url, userId, isLiked } = req.body;
+  const JSONphotos = JSON.stringify(photos);
   const sql = `
     WITH "insertOrg" AS (
       INSERT INTO "organizations" ("petfinderOrgId", "organization", "address1", "address2", "email", "phone")
@@ -156,7 +159,7 @@ app.post('/api/swipe', (req, res, next) => {
     VALUES ($21, $7, $22)
     RETURNING *
   `;
-  const params = [orgId, org, address1, address2, email, phone, doggoId, photos, name, breed, location, age, gender, size, distance, description, characteristics, health, home, url, userId, isLiked];
+  const params = [orgId, org, address1, address2, email, phone, doggoId, JSONphotos, name, breed, location, age, gender, size, distance, description, characteristics, health, home, url, userId, isLiked];
   db.query(sql, params)
     .then(result => res.sendStatus(201))
     .catch(err => next(err));
