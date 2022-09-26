@@ -78,28 +78,21 @@ app.post('/api/auth/sign-in', (req, res, next) => {
 app.use(authorizationMiddleware);
 
 app.get('/api/discover', (req, res, next) => {
-  const { userId, location } = req.user;
+  const { userId } = req.user;
   discoverDoggo()
     .then(results => res.json(results))
     .catch(err => next(err));
 
   function discoverDoggo() {
     return getOAuth()
-      .then(credentials => {
-        return getDoggo(credentials);
-      })
-      .then(({ doggo, credentials, orgHref }) => {
+      .then(getHrefs)
+      .then(([credentials, hrefs]) => {
         return Promise
-          .all([doggo, getOrg(credentials, orgHref)]);
+          .all([getDoggo(credentials, hrefs.doggoHref), getOrg(credentials, hrefs.orgHref)]);
       })
-      .then(data => {
-        const doggo = data[0];
-        const org = data[1].organization;
-        // console.log('doggo:', doggo);
-        // console.log('org:', org);
-        return isSwipedByUser(userId, doggo.id)
+      .then(([doggo, org]) => {
+        return isSwipedByUser(userId, doggo.animal.id)
           .then(isSwiped => {
-            // console.log(isSwiped);
             if (isSwiped) {
               return discoverDoggo();
             } else {
@@ -130,10 +123,9 @@ app.get('/api/discover', (req, res, next) => {
       });
   }
 
-  function getDoggo(credentials) {
+  function getHrefs(credentials) {
     const params = new URLSearchParams({
       type: 'dog',
-      location,
       limit: '1'
     }).toString();
     return fetch(`https://api.petfinder.com/v2/animals?${params}`, {
@@ -144,12 +136,24 @@ app.get('/api/discover', (req, res, next) => {
     })
       .then(res => res.json())
       .then(data => {
-        return {
+        return [
           credentials,
-          doggo: data.animals[0],
-          orgHref: data.animals[0]._links.organization.href
-        };
+          {
+            doggoHref: data.animals[0]._links.self.href,
+            orgHref: data.animals[0]._links.organization.href
+          }
+        ];
       });
+  }
+
+  function getDoggo(credentials, doggoHref) {
+    return fetch('https://api.petfinder.com' + doggoHref, {
+      headers: {
+        Authorization: credentials.tokenType + ' ' + credentials.token,
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => res.json());
   }
 
   function getOrg(credentials, orgHref) {
@@ -172,7 +176,6 @@ app.get('/api/discover', (req, res, next) => {
     const params = [userId, doggoId];
     return db.query(sql, params)
       .then(result => {
-        // console.log('result.rows:', result.rows);
         return result.rows.length !== 0;
       });
   }
