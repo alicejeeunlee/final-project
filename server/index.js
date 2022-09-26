@@ -92,10 +92,6 @@ app.get('/api/discover', (req, res, next) => {
         return Promise
           .all([doggo, getOrg(credentials, orgHref)]);
       })
-      // .then(({ credentials, orgHref }) => {
-      //   return Promise
-      //     .all([getDoggo(credentials), getOrg(credentials, orgHref)]);
-      // })
       .then(data => {
         const doggo = data[0];
         const org = data[1].organization;
@@ -103,6 +99,7 @@ app.get('/api/discover', (req, res, next) => {
         // console.log('org:', org);
         return isSwipedByUser(userId, doggo.id)
           .then(isSwiped => {
+            // console.log(isSwiped);
             if (isSwiped) {
               return discoverDoggo();
             } else {
@@ -175,6 +172,7 @@ app.get('/api/discover', (req, res, next) => {
     const params = [userId, doggoId];
     return db.query(sql, params)
       .then(result => {
+        // console.log('result.rows:', result.rows);
         return result.rows.length !== 0;
       });
   }
