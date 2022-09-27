@@ -143,8 +143,9 @@ export default class Discover extends React.Component {
           <div className='row'>
             <h1 className='page-title mt-0 mb-0'>Henlo Fren</h1>
           </div>
-          <h1>LOADING LOADING LOADING...</h1>
-          <h1>INSERT LOADING SPINNER HERE</h1>
+          <div className='loading-spinner-container'>
+            <img className='loading-spinner' src="/images/doggo-loading-spinner.gif" alt="Loading Spinner" />
+          </div>
         </div>
 
       );

@@ -71,7 +71,7 @@ export default class ProfileCard extends React.Component {
                 <i className={showIcon}></i>
               </div>
               <div className='card-body'>
-                <div className='d-flex align-items-center'>
+                <div className='d-flex align-items-center justify-content-flex-start'>
                   <h2 className='card-title mt-0 mb-0'>{this.props.data.name}</h2>
                   <i className={this.props.data.breed ? 'fa-solid fa-bone ms-2 me-2' : 'd-none'}></i>
                   <h3 className='card-subtitle mt-0 mb-0'>{this.props.data.breed}</h3>
