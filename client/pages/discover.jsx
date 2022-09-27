@@ -7,6 +7,7 @@ export default class Discover extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLoading: true,
       photos: ['/images/woofles-placeholder.png']
     };
     this.getDoggo = this.getDoggo.bind(this);
@@ -14,6 +15,7 @@ export default class Discover extends React.Component {
   }
 
   getDoggo() {
+    this.setState({ isLoading: true });
     return fetch('/api/discover', {
       method: 'GET',
       headers: {
@@ -93,6 +95,7 @@ export default class Discover extends React.Component {
           gender,
           health,
           home,
+          isLoading: false,
           location,
           name,
           org,
@@ -134,19 +137,32 @@ export default class Discover extends React.Component {
 
   render() {
     const { route } = this.props.state;
-    if (route.path === 'discover') {
+    if (this.state.isLoading) {
       return (
         <div className='container'>
           <div className='row'>
             <h1 className='page-title mt-0 mb-0'>Henlo Fren</h1>
           </div>
-          <ProfileCard data={this.state}
-          handleSwipe={this.handleSwipe}/>
+          <h1>LOADING LOADING LOADING...</h1>
+          <h1>INSERT LOADING SPINNER HERE</h1>
         </div>
+
       );
-    }
-    if (route.path === 'details') {
-      return <ProfileDetail data={this.state} />;
+    } else {
+      if (route.path === 'discover') {
+        return (
+          <div className='container'>
+            <div className='row'>
+              <h1 className='page-title mt-0 mb-0'>Henlo Fren</h1>
+            </div>
+            <ProfileCard data={this.state}
+              handleSwipe={this.handleSwipe} />
+          </div>
+        );
+      }
+      if (route.path === 'details') {
+        return <ProfileDetail data={this.state} />;
+      }
     }
   }
 }
