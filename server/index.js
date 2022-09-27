@@ -24,16 +24,16 @@ app.use(express.json());
 const credentials = null;
 
 app.post('/api/auth/sign-up', (req, res, next) => {
-  const { email, name, password, location } = req.body;
+  const { email, name, password } = req.body;
   argon2
     .hash(password)
     .then(hashedPassword => {
       const sql = `
-        INSERT INTO "users" ("email", "name", "hashedPassword", "location")
-        VALUES ($1, $2, $3, $4)
-        RETURNING "userId", "email", "location"
+        INSERT INTO "users" ("email", "name", "hashedPassword")
+        VALUES ($1, $2, $3)
+        RETURNING "userId", "email"
       `;
-      const params = [email, name, hashedPassword, location];
+      const params = [email, name, hashedPassword];
       return db.query(sql, params);
     })
     .then(result => {
@@ -48,8 +48,7 @@ app.post('/api/auth/sign-in', (req, res, next) => {
   const sql = `
     SELECT "userId",
            "hashedPassword",
-           "name",
-           "location"
+           "name"
     FROM "users"
     WHERE "email" = $1
   `;
@@ -60,14 +59,14 @@ app.post('/api/auth/sign-in', (req, res, next) => {
       if (!user) {
         throw new ClientError(401, 'invalid login');
       }
-      const { userId, name, hashedPassword, location } = user;
+      const { userId, name, hashedPassword } = user;
       return argon2
         .verify(hashedPassword, password)
         .then(isMatching => {
           if (!isMatching) {
             throw new ClientError(401, 'invalid login');
           }
-          const payload = { userId, name, location };
+          const payload = { userId, name };
           const token = jwt.sign(payload, process.env.TOKEN_SECRET);
           res.json({ token, user: payload });
         });
