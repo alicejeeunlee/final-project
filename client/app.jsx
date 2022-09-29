@@ -42,7 +42,7 @@ export default class App extends React.Component {
     if (path === 'discover' || path === 'details') {
       return <Discover state={this.state} />;
     }
-    if (path === 'favorites') {
+    if (path === 'favorites' || path === 'favorite') {
       return <Favorites />;
     }
   }

@@ -209,7 +209,7 @@ app.get('/api/favorites', (req, res, next) => {
   const { userId } = req.user;
   const isLiked = true;
   const sql = `
-    SELECT "petfinderDogId", "photoUrls", "name", "location"
+    SELECT *
     FROM "dogs"
     JOIN "swipes" USING ("petfinderDogId")
     WHERE "userId" = $1 AND "isLiked" = $2
@@ -228,19 +228,3 @@ app.use(errorMiddleware);
 app.listen(process.env.PORT, () => {
   process.stdout.write(`\n\napp listening on port ${process.env.PORT}\n\n`);
 });
-
-// app.get('/api/favorites/:petfinderDogId', (req, res, next) => {
-//   const { petfinderDogId } = req.params;
-//   const sql = `
-//     SELECT *
-//     FROM "dogs"
-//     WHERE "petfinderDogId" = $1
-//     RETURNING *
-//   `;
-//   const params = [petfinderDogId];
-//   db.query(sql, params)
-//     .then(result => {
-//       const doggo = result.rows;
-//       console.log(doggo);
-//     });
-// });
