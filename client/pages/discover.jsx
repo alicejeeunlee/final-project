@@ -136,7 +136,7 @@ export default class Discover extends React.Component {
   }
 
   render() {
-    const { route } = this.props.state;
+    const { route } = this.context;
     if (this.state.isLoading) {
       return (
         <div className='container'>

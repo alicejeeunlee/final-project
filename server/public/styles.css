@@ -240,6 +240,10 @@ a {
   object-fit: cover;
 }
 
+.favorites-text-container {
+  margin-left: 2rem;
+}
+
 .favorites-name {
   font-size: 2.5rem;
 }

@@ -27,11 +27,11 @@ export default class Favorites extends React.Component {
   makeListItem() {
     return this.state.likedDogs.map((doggo, index) => {
       return (
-        <a href="favorites" key={index} className='d-flex pt-3 pb-3 align-items-center list-group-item list-group-item-action'>
+        <a href="#favorites" key={index} className='d-flex pt-3 pb-3 align-items-center list-group-item list-group-item-action'>
           <div className='circle-img-container'>
             <img src={doggo.photoUrls[0]} className='favorites-img' alt="" />
           </div>
-          <div className='ps-4'>
+          <div className='favorites-text-container'>
             <h1 className='favorites-name mb-0'>{doggo.name}</h1>
             <p className={doggo.location ? 'favorites-text mb-0' : 'd-none'}>{doggo.location}</p>
           </div>
@@ -53,7 +53,7 @@ export default class Favorites extends React.Component {
           </div>
         </div>
         <div className='row justify-content-center'>
-          <div className='col col-md-6'>
+          <div className='col col-md-5'>
             <div className='list-group'>
               {this.state.likedDogs === null ? null : this.makeListItem()}
             </div>
