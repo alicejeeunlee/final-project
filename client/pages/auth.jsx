@@ -6,8 +6,7 @@ export default class AuthForm extends React.Component {
     this.state = {
       name: '',
       email: '',
-      password: '',
-      location: ''
+      password: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -86,17 +85,6 @@ export default class AuthForm extends React.Component {
                   onChange={this.handleChange}
                   className='form-control'
                   placeholder='Password' />
-              </div>
-              <div className={signUpInput}>
-                <i id='basic-addon4' className='bi bi-pin-map input-group-text'></i>
-                <input
-                  required={isRequired}
-                  id='location'
-                  type='text'
-                  name='location'
-                  onChange={this.handleChange}
-                  className='form-control'
-                  placeholder='City, State' />
               </div>
               <div className='d-flex justify-content-around pt-1 pb-3'>
                 <button className='form-button' type='button'><a className='auth-button-text' href={altHref}>{hrefButton}</a></button>

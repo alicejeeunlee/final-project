@@ -24,16 +24,16 @@ app.use(express.json());
 const credentials = null;
 
 app.post('/api/auth/sign-up', (req, res, next) => {
-  const { email, name, password, location } = req.body;
+  const { email, name, password } = req.body;
   argon2
     .hash(password)
     .then(hashedPassword => {
       const sql = `
-        INSERT INTO "users" ("email", "name", "hashedPassword", "location")
-        VALUES ($1, $2, $3, $4)
-        RETURNING "userId", "email", "location"
+        INSERT INTO "users" ("email", "name", "hashedPassword")
+        VALUES ($1, $2, $3)
+        RETURNING "userId", "email"
       `;
-      const params = [email, name, hashedPassword, location];
+      const params = [email, name, hashedPassword];
       return db.query(sql, params);
     })
     .then(result => {
@@ -123,7 +123,11 @@ app.get('/api/discover', (req, res, next) => {
   }
 
   function getHrefs(credentials) {
-    return fetch('https://api.petfinder.com/v2/animals?type=dog&limit=1', {
+    const params = new URLSearchParams({
+      type: 'dog',
+      limit: '1'
+    }).toString();
+    return fetch(`https://api.petfinder.com/v2/animals?${params}`, {
       headers: {
         Authorization: credentials.tokenType + ' ' + credentials.token,
         'Content-Type': 'application/json'
@@ -179,6 +183,7 @@ app.get('/api/discover', (req, res, next) => {
 app.post('/api/swipe', (req, res, next) => {
   const { userId } = req.user;
   const { address1, address2, age, breed, characteristics, description, distance, doggoId, email, gender, health, home, location, name, org, orgId, phone, photos, size, url, isLiked } = req.body;
+  const JSONphotos = JSON.stringify(photos);
   const sql = `
     WITH "insertOrg" AS (
       INSERT INTO "organizations" ("petfinderOrgId", "organization", "address1", "address2", "email", "phone")
@@ -194,9 +199,27 @@ app.post('/api/swipe', (req, res, next) => {
     VALUES ($21, $7, $22)
     RETURNING *
   `;
-  const params = [orgId, org, address1, address2, email, phone, doggoId, photos, name, breed, location, age, gender, size, distance, description, characteristics, health, home, url, userId, isLiked];
+  const params = [orgId, org, address1, address2, email, phone, doggoId, JSONphotos, name, breed, location, age, gender, size, distance, description, characteristics, health, home, url, userId, isLiked];
   db.query(sql, params)
     .then(result => res.sendStatus(201))
+    .catch(err => next(err));
+});
+
+app.get('/api/favorites', (req, res, next) => {
+  const { userId } = req.user;
+  const isLiked = true;
+  const sql = `
+    SELECT *
+    FROM "dogs"
+    JOIN "swipes" USING ("petfinderDogId")
+    WHERE "userId" = $1 AND "isLiked" = $2
+  `;
+  const params = [userId, isLiked];
+  db.query(sql, params)
+    .then(result => {
+      const likedDogs = result.rows;
+      res.status(200).json(likedDogs);
+    })
     .catch(err => next(err));
 });
 
