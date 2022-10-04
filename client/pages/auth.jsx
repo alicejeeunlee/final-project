@@ -1,4 +1,5 @@
 import React from 'react';
+import AppContext from '../lib/app-context';
 
 export default class AuthForm extends React.Component {
   constructor(props) {
@@ -29,10 +30,11 @@ export default class AuthForm extends React.Component {
     })
       .then(res => res.json())
       .then(result => {
+        const { handleSignIn } = this.context;
         if (route.path === 'sign-up' || route.path === '') {
           window.location.hash = 'sign-in';
         } else if (result.user && result.token) {
-          this.props.onSignIn(result);
+          handleSignIn(result);
           window.location.replace('#discover');
         }
       });
@@ -97,3 +99,5 @@ export default class AuthForm extends React.Component {
     );
   }
 }
+
+AuthForm.contextType = AppContext;

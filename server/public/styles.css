@@ -30,6 +30,10 @@ a {
   font-size: 1.5rem;
 }
 
+.fa-right-from-bracket {
+  color: #6ca4d0;
+}
+
 .anchor {
   text-decoration: none;
   color: white;
