@@ -48,6 +48,7 @@ app.post('/api/auth/sign-in', (req, res, next) => {
   const sql = `
     SELECT "userId",
            "hashedPassword",
+           "email",
            "name"
     FROM "users"
     WHERE "email" = $1
@@ -66,7 +67,7 @@ app.post('/api/auth/sign-in', (req, res, next) => {
           if (!isMatching) {
             throw new ClientError(401, 'invalid login');
           }
-          const payload = { userId, name };
+          const payload = { userId, name, email };
           const token = jwt.sign(payload, process.env.TOKEN_SECRET);
           res.json({ token, user: payload });
         });
