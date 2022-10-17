@@ -4,6 +4,7 @@ import LogoNavbar from './components/logo-navbar';
 import AuthForm from './pages/auth';
 import Discover from './pages/discover';
 import Favorites from './pages/favorites';
+import Account from './pages/account';
 import MobileNavbar from './components/mobile-navbar';
 import parseRoute from './lib/parse-route';
 import AppContext from './lib/app-context';
@@ -17,6 +18,7 @@ export default class App extends React.Component {
       route: parseRoute(window.location.hash)
     };
     this.handleSignIn = this.handleSignIn.bind(this);
+    this.handleSignOut = this.handleSignOut.bind(this);
   }
 
   componentDidMount() {
@@ -34,10 +36,16 @@ export default class App extends React.Component {
     this.setState({ user });
   }
 
+  handleSignOut() {
+    window.localStorage.removeItem('woofles-jwt');
+    this.setState({ user: null });
+    window.location.replace('#sign-up');
+  }
+
   renderPage() {
     const { path } = this.state.route;
     if (this.state.isAuthorizing || path === 'sign-up' || path === 'sign-in' || path === '') {
-      return <AuthForm route={this.state} onSignIn={this.handleSignIn} />;
+      return <AuthForm route={this.state} />;
     }
     if (path === 'discover' || path === 'details') {
       return <Discover state={this.state} />;
@@ -45,11 +53,15 @@ export default class App extends React.Component {
     if (path === 'favorites' || path === 'favorite') {
       return <Favorites />;
     }
+    if (path === 'account') {
+      return <Account />;
+    }
   }
 
   render() {
     const { user, route } = this.state;
-    const contextValue = { user, route };
+    const { handleSignIn, handleSignOut } = this;
+    const contextValue = { user, route, handleSignIn, handleSignOut };
     return (
       <AppContext.Provider value={contextValue}>
         <>

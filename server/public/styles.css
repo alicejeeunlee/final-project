@@ -30,6 +30,10 @@ a {
   font-size: 1.5rem;
 }
 
+.fa-right-from-bracket {
+  color: #6ca4d0;
+}
+
 .anchor {
   text-decoration: none;
   color: white;
@@ -37,11 +41,30 @@ a {
   padding-right: 2.5rem;
 }
 
+#sign-out-btn {
+  color: #6ca4d0;
+  font-size: 1.3rem;
+}
+
 .fa-paw,
 .fa-heart,
 .fa-user {
   color: white;
   font-size: 2.5rem;
+}
+
+.account-text {
+  font-size: 1.8rem;
+}
+
+#sign-out-mobile {
+  color: white;
+  background-color: #6ca4d0;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 5px;
+  padding: 0.2rem 0.5rem;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
 }
 
 .form-bg-img {
