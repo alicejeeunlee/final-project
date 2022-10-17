@@ -38,6 +38,7 @@ export default class App extends React.Component {
   handleSignOut() {
     window.localStorage.removeItem('woofles-jwt');
     this.setState({ user: null });
+    window.location.replace('#sign-up');
   }
 
   renderPage() {

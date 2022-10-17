@@ -41,6 +41,11 @@ a {
   padding-right: 2.5rem;
 }
 
+#sign-out-btn {
+  color: #6ca4d0;
+  font-size: 1.3rem;
+}
+
 .fa-paw,
 .fa-heart,
 .fa-user {

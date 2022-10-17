@@ -3,6 +3,10 @@
     display: none;
   }
 
+  #sign-out-btn {
+    display: none;
+  }
+
   #card-buttons {
     display: none;
   }
@@ -14,6 +18,10 @@
   }
 
   #desktop-nav {
+    display: block;
+  }
+
+  #sign-out-btn {
     display: block;
   }
 
