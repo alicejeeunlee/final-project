@@ -4,6 +4,7 @@ import LogoNavbar from './components/logo-navbar';
 import AuthForm from './pages/auth';
 import Discover from './pages/discover';
 import Favorites from './pages/favorites';
+import Account from './pages/account';
 import MobileNavbar from './components/mobile-navbar';
 import parseRoute from './lib/parse-route';
 import AppContext from './lib/app-context';
@@ -51,6 +52,9 @@ export default class App extends React.Component {
     }
     if (path === 'favorites' || path === 'favorite') {
       return <Favorites />;
+    }
+    if (path === 'account') {
+      return <Account />;
     }
   }
 
