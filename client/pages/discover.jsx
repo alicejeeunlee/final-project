@@ -8,7 +8,7 @@ export default class Discover extends React.Component {
     super(props);
     this.state = {
       isLoading: true,
-      photos: ['/images/woofles-placeholder.png']
+      photos: ['/images/woofles-placeholder.webp']
     };
     this.getDoggo = this.getDoggo.bind(this);
     this.handleSwipe = this.handleSwipe.bind(this);
@@ -31,7 +31,7 @@ export default class Discover extends React.Component {
         if (doggo.photos.length > 0) {
           photos = doggo.photos.map(x => x.full);
         } else {
-          photos = ['/images/woofles-placeholder.png'];
+          photos = ['/images/woofles-placeholder.webp'];
         }
         let breed;
         if (doggo.breeds.mixed) {
@@ -147,7 +147,6 @@ export default class Discover extends React.Component {
             <img className='loading-spinner' src="/images/doggo-loading-spinner.gif" alt="Loading Spinner" />
           </div>
         </div>
-
       );
     } else {
       if (route.path === 'discover') {
