@@ -11,6 +11,7 @@ export default class AuthForm extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDemo = this.handleDemo.bind(this);
   }
 
   handleChange(event) {
@@ -44,6 +45,19 @@ export default class AuthForm extends React.Component {
       });
   }
 
+  handleDemo(event) {
+    const { route } = this.props.route;
+    if (route.path === 'sign-in') {
+      this.setState({
+        name: 'DEMO',
+        email: 'demo@email.com',
+        password: 'password'
+      });
+    } else {
+      window.location.hash = 'sign-in';
+    }
+  }
+
   render() {
     const { route } = this.props.route;
     const welcomeMessage = route.path === 'sign-in' ? 'Sign In' : 'Create an Account';
@@ -51,13 +65,15 @@ export default class AuthForm extends React.Component {
     const hrefButton = route.path === 'sign-in' ? 'New User' : 'Login';
     const altHref = route.path === 'sign-in' ? '#sign-up' : '#sign-in';
     const submitButton = route.path === 'sign-in' ? 'Login' : 'Sign Up';
+    const demoButton = route.path === 'sign-in' ? 'Demo User Login' : 'DEMO ACCOUNT';
     const isRequired = route.path !== 'sign-in';
     return (
       <div className='container-fluid form-bg-img text-center'>
         <div className='row justify-content-center'>
           <div className='col-11 col-sm-7 col-md-5 col-lg-4 col-xl-3 form-background mt-3 ms-3 me-3'>
             <h1 className='form-title mt-0 mb-0 pt-3'>{welcomeMessage}</h1>
-            <h2 className='form-subtitle mb-4'>Find Your Forever Furry Friend</h2>
+            <h2 className='form-subtitle mb-2'>Find Your Forever Furry Friend</h2>
+            <button className='demo-button mb-3' onClick={this.handleDemo}>{demoButton}</button>
             <form onSubmit={this.handleSubmit}>
               <div className={signUpInput}>
                 <i id='basic-addon1' className='bi bi-person input-group-text'></i>
@@ -67,6 +83,7 @@ export default class AuthForm extends React.Component {
                   type='text'
                   name='name'
                   onChange={this.handleChange}
+                  value={this.state.name}
                   className='form-control'
                   placeholder='Name' />
               </div>
@@ -78,6 +95,7 @@ export default class AuthForm extends React.Component {
                   type='email'
                   name='email'
                   onChange={this.handleChange}
+                  value={this.state.email}
                   className='form-control'
                   placeholder='Email' />
               </div>
@@ -89,6 +107,7 @@ export default class AuthForm extends React.Component {
                   type='password'
                   name='password'
                   onChange={this.handleChange}
+                  value={this.state.password}
                   className='form-control'
                   placeholder='Password' />
               </div>
