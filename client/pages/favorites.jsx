@@ -30,6 +30,10 @@ export default class Favorites extends React.Component {
         };
         const likedDogs = arrayToObject1(data, 'petfinderDogId');
         this.setState({ likedDogs });
+      })
+      .catch(err => {
+        const { handleNetworkError } = this.context;
+        handleNetworkError(err);
       });
   }
 

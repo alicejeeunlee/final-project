@@ -106,7 +106,10 @@ export default class Discover extends React.Component {
           url
         });
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        const { handleNetworkError } = this.context;
+        handleNetworkError(err);
+      });
   }
 
   handleSwipe(direction) {
@@ -128,7 +131,10 @@ export default class Discover extends React.Component {
         if (!res.ok) throw new Error('Fetch failed to POST');
         this.getDoggo();
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        const { handleNetworkError } = this.context;
+        handleNetworkError(err);
+      });
   }
 
   componentDidMount() {

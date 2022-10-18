@@ -37,6 +37,10 @@ export default class AuthForm extends React.Component {
           handleSignIn(result);
           window.location.replace('#discover');
         }
+      })
+      .catch(err => {
+        const { handleNetworkError } = this.context;
+        handleNetworkError(err);
       });
   }
 
