@@ -19,6 +19,19 @@ export default class AuthForm extends React.Component {
     this.setState({ [name]: value });
   }
 
+  handleDemo(event) {
+    const { route } = this.props.route;
+    if (route.path === 'sign-in') {
+      this.setState({
+        name: 'DEMO',
+        email: 'demo@email.com',
+        password: 'password'
+      });
+    } else {
+      window.location.hash = 'sign-in';
+    }
+  }
+
   handleSubmit(event) {
     event.preventDefault();
     const { route } = this.props.route;
@@ -45,19 +58,6 @@ export default class AuthForm extends React.Component {
       });
   }
 
-  handleDemo(event) {
-    const { route } = this.props.route;
-    if (route.path === 'sign-in') {
-      this.setState({
-        name: 'DEMO',
-        email: 'demo@email.com',
-        password: 'password'
-      });
-    } else {
-      window.location.hash = 'sign-in';
-    }
-  }
-
   render() {
     const { route } = this.props.route;
     const welcomeMessage = route.path === 'sign-in' ? 'Sign In' : 'Create an Account';
@@ -73,8 +73,8 @@ export default class AuthForm extends React.Component {
           <div className='col-11 col-sm-7 col-md-5 col-lg-4 col-xl-3 form-background mt-3 ms-3 me-3'>
             <h1 className='form-title mt-0 mb-0 pt-3'>{welcomeMessage}</h1>
             <h2 className='form-subtitle mb-2'>Find Your Forever Furry Friend</h2>
-            <button className='demo-button mb-3' onClick={this.handleDemo}>{demoButton}</button>
             <form onSubmit={this.handleSubmit}>
+              <button className='demo-button mb-3' onClick={this.handleDemo}>{demoButton}</button>
               <div className={signUpInput}>
                 <i id='basic-addon1' className='bi bi-person input-group-text'></i>
                 <input
