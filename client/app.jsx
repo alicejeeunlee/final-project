@@ -80,7 +80,6 @@ export default class App extends React.Component {
           <MobileNavbar />
         </>
       </AppContext.Provider>
-
     );
   }
 }

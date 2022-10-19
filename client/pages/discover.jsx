@@ -150,7 +150,7 @@ export default class Discover extends React.Component {
             <h1 className='page-title mt-0 mb-0'>Henlo Fren</h1>
           </div>
           <div className='loading-spinner-container'>
-            <img className='loading-spinner' src="/images/doggo-loading-spinner.gif" alt="Loading Spinner" />
+            <img className='loading-spinner' src='/images/doggo-loading-spinner.gif' alt='Loading Spinner' />
           </div>
         </div>
       );

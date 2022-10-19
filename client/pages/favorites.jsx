@@ -44,7 +44,7 @@ export default class Favorites extends React.Component {
       return (
         <a href={`#favorite?petfinderDogId=${petfinderDogId}`} key={index} className='d-flex pt-3 pb-3 align-items-center list-group-item list-group-item-action'>
           <div className='circle-img-container'>
-            <img src={doggo.photoUrls[0]} className='favorites-img' alt="" />
+            <img src={doggo.photoUrls[0]} className='favorites-img' alt='Dog photo' />
           </div>
           <div className='favorites-text-container'>
             <h1 className='favorites-name mb-0'>{doggo.name}</h1>

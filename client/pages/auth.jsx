@@ -20,7 +20,7 @@ export default class AuthForm extends React.Component {
   }
 
   handleDemo(event) {
-    const { route } = this.props.route;
+    const { route } = this.context;
     if (route.path === 'sign-in') {
       this.setState({
         name: 'DEMO',
@@ -34,7 +34,7 @@ export default class AuthForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const { route } = this.props.route;
+    const { route } = this.context;
     fetch(`/api/auth/${route.path}`, {
       method: 'POST',
       headers: {
@@ -59,7 +59,7 @@ export default class AuthForm extends React.Component {
   }
 
   render() {
-    const { route } = this.props.route;
+    const { route } = this.context;
     const welcomeMessage = route.path === 'sign-in' ? 'Sign In' : 'Create an Account';
     const signUpInput = route.path === 'sign-in' ? 'd-none' : 'input-group mb-3';
     const hrefButton = route.path === 'sign-in' ? 'New User' : 'Login';
