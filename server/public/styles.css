@@ -15,6 +15,8 @@ a {
   text-decoration: none !important;
 }
 
+/* Logo Navbar Component */
+
 .navbar {
   background-color: #6ca4d0;
 }
@@ -30,10 +32,6 @@ a {
   font-size: 1.5rem;
 }
 
-.fa-right-from-bracket {
-  color: #6ca4d0;
-}
-
 .anchor {
   text-decoration: none;
   color: white;
@@ -46,12 +44,20 @@ a {
   font-size: 1.3rem;
 }
 
+.fa-right-from-bracket {
+  color: #6ca4d0;
+}
+
+/* Mobile Navbar Component */
+
 .fa-paw,
 .fa-heart,
 .fa-user {
   color: white;
   font-size: 2.5rem;
 }
+
+/* Account Page */
 
 .account-text {
   font-size: 1.8rem;
@@ -66,6 +72,8 @@ a {
   padding: 0.2rem 0.5rem;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
 }
+
+/* Auth Page */
 
 .form-bg-img {
   background-image: url("./images/doggo-background.webp");
@@ -114,9 +122,13 @@ a {
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
 
+/* Discover Page */
+
 .page-title {
   font-size: 3rem;
 }
+
+/* Profile Card Component */
 
 #card-container {
   overflow: hidden;
@@ -126,6 +138,48 @@ a {
   box-shadow: 0 5px 5px rgba(48, 39, 39, 0.25);
   transform-origin: center bottom;
 }
+
+.card-img-container {
+  position: relative;
+}
+
+.card-img-container img {
+  display: block;
+}
+
+.card-img-top {
+  height: 55vh;
+  object-fit: cover;
+}
+
+.card-title {
+  color: black;
+  font-size: 3rem;
+}
+
+.fa-bone {
+  color: #6ca4d0;
+  font-size: 1rem;
+}
+
+.card-subtitle {
+  color: #68717a;
+}
+
+.card-text {
+  font-size: 1.5rem;
+  color: #abb5be;
+}
+
+.btn {
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.25);
+}
+
+#card-buttons > button {
+  font-size: 2.5rem;
+}
+
+/* Profile Card Swipe Animation */
 
 @keyframes love {
   from {
@@ -161,14 +215,6 @@ a {
   animation-fill-mode: forwards;
 }
 
-.card-img-container {
-  position: relative;
-}
-
-.card-img-container img {
-  display: block;
-}
-
 .fa-face-grin-hearts {
   color: #46d646;
   font-size: 7rem;
@@ -185,37 +231,7 @@ a {
   left: 1.5rem;
 }
 
-.card-img-top {
-  height: 55vh;
-  object-fit: cover;
-}
-
-.card-title {
-  color: black;
-  font-size: 3rem;
-}
-
-.fa-bone {
-  color: #6ca4d0;
-  font-size: 1rem;
-}
-
-.card-subtitle {
-  color: #68717a;
-}
-
-.card-text {
-  font-size: 1.5rem;
-  color: #abb5be;
-}
-
-.btn {
-  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.25);
-}
-
-#card-buttons > button {
-  font-size: 2.5rem;
-}
+/* Loading Spinner */
 
 .loading-spinner-container {
   display: flex;
@@ -226,6 +242,8 @@ a {
 .loading-spinner {
   object-fit: contain;
 }
+
+/* Profile Detail Component */
 
 .carousel-radius {
   border-radius: 5px;
@@ -258,6 +276,8 @@ a {
 .fa-phone {
   color: #6ca4d0;
 }
+
+/* Favorites Page */
 
 .circle-img-container {
   width: 9rem;
