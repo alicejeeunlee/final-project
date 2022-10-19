@@ -6,6 +6,7 @@ import Discover from './pages/discover';
 import Favorites from './pages/favorites';
 import Account from './pages/account';
 import MobileNavbar from './components/mobile-navbar';
+import NetworkError from './components/network-error';
 import parseRoute from './lib/parse-route';
 import AppContext from './lib/app-context';
 
@@ -15,10 +16,12 @@ export default class App extends React.Component {
     this.state = {
       user: null,
       isAuthorizing: true,
-      route: parseRoute(window.location.hash)
+      route: parseRoute(window.location.hash),
+      networkError: null
     };
     this.handleSignIn = this.handleSignIn.bind(this);
     this.handleSignOut = this.handleSignOut.bind(this);
+    this.handleNetworkError = this.handleNetworkError.bind(this);
   }
 
   componentDidMount() {
@@ -42,8 +45,15 @@ export default class App extends React.Component {
     window.location.replace('#sign-up');
   }
 
+  handleNetworkError(error) {
+    this.setState({ networkError: error.message });
+  }
+
   renderPage() {
     const { path } = this.state.route;
+    if (this.state.networkError) {
+      return <NetworkError error={this.state.networkError}/>;
+    }
     if (this.state.isAuthorizing || path === 'sign-up' || path === 'sign-in' || path === '') {
       return <AuthForm route={this.state} />;
     }
@@ -60,8 +70,8 @@ export default class App extends React.Component {
 
   render() {
     const { user, route } = this.state;
-    const { handleSignIn, handleSignOut } = this;
-    const contextValue = { user, route, handleSignIn, handleSignOut };
+    const { handleSignIn, handleSignOut, handleNetworkError } = this;
+    const contextValue = { user, route, handleSignIn, handleSignOut, handleNetworkError };
     return (
       <AppContext.Provider value={contextValue}>
         <>
@@ -70,7 +80,6 @@ export default class App extends React.Component {
           <MobileNavbar />
         </>
       </AppContext.Provider>
-
     );
   }
 }

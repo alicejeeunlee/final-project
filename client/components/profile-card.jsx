@@ -61,13 +61,13 @@ export default class ProfileCard extends React.Component {
     return (
       <div id='card-container' className='row justify-content-center'>
         <div className='col-md-9 col-lg-7 col-xl-6'>
-          <a href="#details">
+          <a href='#details'>
             <div className={cardAnimation}
             onTouchStart={this.onTouchStart}
             onTouchEnd={this.onTouchEnd}
             >
               <div className='card-img-container'>
-                <img key={this.props.data.photos[0]} src={this.props.data.photos[0]} className='card-img-top' alt="" />
+                <img key={this.props.data.photos[0]} src={this.props.data.photos[0]} className='card-img-top' alt='Dog photo' />
                 <i className={showIcon}></i>
               </div>
               <div className='card-body'>
@@ -80,7 +80,7 @@ export default class ProfileCard extends React.Component {
               </div>
             </div>
           </a>
-          <div id="card-buttons" className='justify-content-between mt-4'>
+          <div id='card-buttons' className='justify-content-between mt-4'>
             <button className='btn btn-outline-danger btn-lg pt-0 pb-0' onClick={this.handleClick}>NOPE</button>
             <button className='btn btn-outline-success btn-lg pt-0 pb-0' onClick={this.handleClick}>LOVE</button>
           </div>

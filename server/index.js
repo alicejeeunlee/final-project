@@ -25,6 +25,9 @@ const credentials = null;
 
 app.post('/api/auth/sign-up', (req, res, next) => {
   const { email, name, password } = req.body;
+  if (!email || !name || !password) {
+    throw new ClientError(400, 'email, name, and password are required');
+  }
   argon2
     .hash(password)
     .then(hashedPassword => {
@@ -45,6 +48,9 @@ app.post('/api/auth/sign-up', (req, res, next) => {
 
 app.post('/api/auth/sign-in', (req, res, next) => {
   const { email, password } = req.body;
+  if (!email || !password) {
+    throw new ClientError(401, 'invalid login');
+  }
   const sql = `
     SELECT "userId",
            "hashedPassword",

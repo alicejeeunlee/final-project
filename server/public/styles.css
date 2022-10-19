@@ -68,7 +68,7 @@ a {
 }
 
 .form-bg-img {
-  background-image: url("./images/doggo-background.jpeg");
+  background-image: url("./images/doggo-background.webp");
   background-position: bottom;
   background-repeat: no-repeat;
   background-size: cover;
@@ -103,6 +103,15 @@ a {
 
 .auth-button-text {
   color: #6ca4d0;
+}
+
+.demo-button {
+  width: 7rem;
+  height: 2rem;
+  border: none;
+  border-radius: 5px;
+  color: #6ca4d0;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .page-title {

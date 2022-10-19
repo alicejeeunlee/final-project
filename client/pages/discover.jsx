@@ -8,7 +8,7 @@ export default class Discover extends React.Component {
     super(props);
     this.state = {
       isLoading: true,
-      photos: ['/images/woofles-placeholder.png']
+      photos: ['/images/woofles-placeholder.webp']
     };
     this.getDoggo = this.getDoggo.bind(this);
     this.handleSwipe = this.handleSwipe.bind(this);
@@ -31,7 +31,7 @@ export default class Discover extends React.Component {
         if (doggo.photos.length > 0) {
           photos = doggo.photos.map(x => x.full);
         } else {
-          photos = ['/images/woofles-placeholder.png'];
+          photos = ['/images/woofles-placeholder.webp'];
         }
         let breed;
         if (doggo.breeds.mixed) {
@@ -106,7 +106,10 @@ export default class Discover extends React.Component {
           url
         });
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        const { handleNetworkError } = this.context;
+        handleNetworkError(err);
+      });
   }
 
   handleSwipe(direction) {
@@ -128,7 +131,10 @@ export default class Discover extends React.Component {
         if (!res.ok) throw new Error('Fetch failed to POST');
         this.getDoggo();
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        const { handleNetworkError } = this.context;
+        handleNetworkError(err);
+      });
   }
 
   componentDidMount() {
@@ -144,10 +150,9 @@ export default class Discover extends React.Component {
             <h1 className='page-title mt-0 mb-0'>Henlo Fren</h1>
           </div>
           <div className='loading-spinner-container'>
-            <img className='loading-spinner' src="/images/doggo-loading-spinner.gif" alt="Loading Spinner" />
+            <img className='loading-spinner' src='/images/doggo-loading-spinner.gif' alt='Loading Spinner' />
           </div>
         </div>
-
       );
     } else {
       if (route.path === 'discover') {
