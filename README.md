@@ -34,6 +34,9 @@ Try the application live at [Woofles](https://woofles.alicejeeunlee.dev/)
 
 ## 🔍 Preview
 
+<img src='server/public/images/readme-swipe-right-mobile.gif' width='250'>
+<img src='server/public/images/readme-view-favorites-desktop.gif'>
+
 ## 📝 Features
 
 * User can sign up for Woofles
