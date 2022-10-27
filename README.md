@@ -4,7 +4,7 @@ A full stack web application for dog lovers looking to adopt their next furry fr
 
 ### 💡 Why I Built This
 
-This solo project was built with React, Node.js, PostgreSQL, and Bootstrap to get a good foundation on full stack web development.
+This solo project was built with PostgreSQL, Express, React, Node.js, [PERN stack] and Bootstrap to get a good foundation on full stack web development.
 
 Inspired by modern dating apps, I wanted to showcase adoptable dogs (because dogs are 1000% better than humans in my humble opinion) and I wanted to learn about swipe gestures and animations. As I was working on this project, Tinder announced that they implemented this idea of [showcasing adoptable dogs in celebration of National Dog Week 2022](https://techcrunch.com/2022/09/20/tinder-finds-a-better-use-by-adding-adoptable-dogs-to-its-app-in-celebration-of-national-dog-week/amp/)!
 
@@ -24,7 +24,7 @@ Try the application live at [Woofles](https://woofles.alicejeeunlee.dev/)
 * HTML5
 * CSS3
 * Bootstrap 5
-* Argon 2
+* Argon2
 * JSON Web Token
 * Webpack
 * Babel
